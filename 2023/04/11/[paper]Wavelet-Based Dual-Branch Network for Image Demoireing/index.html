@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://example.com/image.jpg">
 <meta property="article:published_time" content="2023-04-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-11T12:39:59.872Z">
+<meta property="article:modified_time" content="2023-04-12T03:01:42.795Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="paper">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="article-date">
-     <time datetime="2023-04-11T12:39:59.872Z" itemprop="dateModified">2023-04-11</time>
+     <time datetime="2023-04-12T03:01:42.795Z" itemprop="dateModified">2023-04-12</time>
   </a>
 </div>
 
@@ -234,6 +234,7 @@
 <p>纹理移除方法：<br/><br>使用局部滤波器的方法试图删除某些纹理，可同时保持其他高频结构</p>
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>模块内两个分支</p>
 <img src="../pic/paper/4-11/net.png" style="zoom:60%">
+<img src="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/net.png" class="" title="This is net image">
 两个分支分别处理不同的频率范围
 密集分支用于 close-range 纹理 <br />
 膨胀分支用于 far-range 纹理
@@ -242,12 +243,16 @@
 <p>整体方法：<br><br>小波变换等级设置为2。<br><br>原始RGB输入被转化为48个子带，每个颜色通道转为16个通道 <br></p>
 <p><strong>将高低两个频子带链接起来，而非单独处理每个频带。</strong>因为每个图像的退化模式差异很大，很难找到手动的阈值进行分离。</p>
 <h3 id="密集分支"><a href="#密集分支" class="headerlink" title="密集分支"></a>密集分支</h3><p>通过旁路链接设计+特征重用<br>从RDN【69】中的残差块中添加一个DPM <strong>方向感知模块</strong> <br><br>每个残余块包含2个小模块 <br><br>每个小模块包含5个卷积，每层的输入包含之前所有层的输出 <br><br>DPM用于寻找摩尔纹的方向，其输出和每个密集块的输出相乘，以加权的方式融入到后面的输入中。</p>
-<p><img src="../pic/paper/4-11/DPM.png"> <br></p>
-<h3 id="膨胀卷积"><a href="#膨胀卷积" class="headerlink" title="膨胀卷积"></a>膨胀卷积</h3><p>用膨胀卷积克服下采样以及池化带来的细节损失 for 更好的感受野<br><br><br>该部分仅包含两层：</p>
-<ul>
-<li>3×3膨胀卷积</li>
-<li>3×3卷积</li>
-</ul>
+<img src="../pic/paper/4-11/DPM.png"> 
+<img src="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/DPM.png" class="" title="This is DPM">
+<br>
+### 膨胀卷积
+用膨胀卷积克服下采样以及池化带来的细节损失 for 更好的感受野
+<br>
+该部分仅包含两层：
+- 3×3膨胀卷积
+- 3×3卷积
+
 <p>为了应对出现的网格效应，一般的混合设计不适应。 <br><br>采取【1，2，3，5，8，13，21】7个不同的膨胀率，同时应用一些香草卷积进一步减少网格伪影。</p>
 <h3 id="DPM"><a href="#DPM" class="headerlink" title="DPM"></a>DPM</h3><p>使用DPM来生成注意力图，以突出摩尔纹的空间分布，并施以监督。<br>8个方向+两个卷积层 相当于注意力操作。<br><br>其权重系数由输入的特征经过卷积处理后得到。<br><br>认为其方向信息的突出作用仅在第二阶段才表现</p>
 <h3 id="LOSS-FUNC"><a href="#LOSS-FUNC" class="headerlink" title="LOSS FUNC"></a>LOSS FUNC</h3><p>L1 + 感知 + 小波损失 <br></p>
@@ -262,7 +267,7 @@
 
 
 
-    <a data-url="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" data-id="clgc9313o0001ywwd5fzk4oz3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" data-id="clgd3x44z00011swd6ej74fop" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -338,7 +343,7 @@
         "genre": "",
         "datePublished": "2023-04-11",
         "dateCreated": "2023-04-11",
-        "dateModified": "2023-04-11",
+        "dateModified": "2023-04-12",
         "url": "http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based Dual-Branch Network for Image Demoireing/",
         "description": "Wavelet-Based Dual-Branch Network for Image Demoireing双分支的方法用模块实现。分别为dense 和 dilated 分支 分别用于存储close-range 和 far-range 信息
 文章的主要贡献：
@@ -347,7 +352,7 @@
 方向感知模块 DPM 用于突出摩尔纹区域
 
 相关工作小波方法：有方法认为将小波变换和其逆变换可以视为 池化与",
-        "wordCount": 114
+        "wordCount": 124
     }
 </script>
 
@@ -439,6 +444,12 @@
     </a>
     
     
+        <a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
 </nav>
 
     
@@ -453,6 +464,26 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/04/12/new-test/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/04/12/new-test/" class="title">new test</a></p>
+                            <p class="item-date"><time datetime="2023-04-12T02:56:55.000Z" itemprop="datePublished">2023-04-12</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -494,6 +525,26 @@
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://example.com/image.jpg)" alt="DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" class="title">DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK</a></p>
+                            <p class="item-date"><time datetime="2023-04-10T16:00:00.000Z" itemprop="datePublished">2023-04-11</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -506,7 +557,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -516,7 +567,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -526,7 +577,7 @@
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 10px;">paper</a>
+            <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a>
         </div>
     </div>
 
@@ -634,6 +685,13 @@
 <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
 
     
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
     
 
     
