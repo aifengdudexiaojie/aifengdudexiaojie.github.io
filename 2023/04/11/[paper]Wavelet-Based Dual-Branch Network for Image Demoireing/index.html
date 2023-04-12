@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://example.com/image.jpg">
 <meta property="article:published_time" content="2023-04-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-12T03:01:42.795Z">
+<meta property="article:modified_time" content="2023-04-12T03:08:45.746Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="paper">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="article-date">
-     <time datetime="2023-04-12T03:01:42.795Z" itemprop="dateModified">2023-04-12</time>
+     <time datetime="2023-04-12T03:08:45.746Z" itemprop="dateModified">2023-04-12</time>
   </a>
 </div>
 
@@ -233,17 +233,12 @@
 <p>双分支方法：<br/><br><strong>【40】对困难与简单处理的区域进行的划分</strong>  for 超分任务</p>
 <p>纹理移除方法：<br/><br>使用局部滤波器的方法试图删除某些纹理，可同时保持其他高频结构</p>
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>模块内两个分支</p>
-<img src="../pic/paper/4-11/net.png" style="zoom:60%">
 <img src="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/net.png" class="" title="This is net image">
-两个分支分别处理不同的频率范围
-密集分支用于 close-range 纹理 <br />
-膨胀分支用于 far-range 纹理
-
+<p>两个分支分别处理不同的频率范围<br>密集分支用于 close-range 纹理 <br /><br>膨胀分支用于 far-range 纹理</p>
 <p>发现较高频域包含的摩尔纹较少&#x3D;&gt;为恢复摩尔纹提供关键信息。</p>
 <p>整体方法：<br><br>小波变换等级设置为2。<br><br>原始RGB输入被转化为48个子带，每个颜色通道转为16个通道 <br></p>
 <p><strong>将高低两个频子带链接起来，而非单独处理每个频带。</strong>因为每个图像的退化模式差异很大，很难找到手动的阈值进行分离。</p>
 <h3 id="密集分支"><a href="#密集分支" class="headerlink" title="密集分支"></a>密集分支</h3><p>通过旁路链接设计+特征重用<br>从RDN【69】中的残差块中添加一个DPM <strong>方向感知模块</strong> <br><br>每个残余块包含2个小模块 <br><br>每个小模块包含5个卷积，每层的输入包含之前所有层的输出 <br><br>DPM用于寻找摩尔纹的方向，其输出和每个密集块的输出相乘，以加权的方式融入到后面的输入中。</p>
-<img src="../pic/paper/4-11/DPM.png"> 
 <img src="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/DPM.png" class="" title="This is DPM">
 <br>
 ### 膨胀卷积
@@ -267,7 +262,7 @@
 
 
 
-    <a data-url="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" data-id="clgd40aws0000cowd0s9w3gwb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" data-id="clgd46eaq0003xkwd6d6z0khr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -352,7 +347,7 @@
 方向感知模块 DPM 用于突出摩尔纹区域
 
 相关工作小波方法：有方法认为将小波变换和其逆变换可以视为 池化与",
-        "wordCount": 124
+        "wordCount": 120
     }
 </script>
 
@@ -433,12 +428,16 @@
         
 <nav id="article-nav">
     
+        <a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
     
-        <a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
     
 </nav>
 
@@ -458,10 +457,10 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="thumbnail">
+                            <a href="/2023/04/11/%5Bother%5DMovies%20and%20Actors/" class="thumbnail">
     
     
-        <span style="background-image:url(https://example.com/image.jpg)" alt="Wavelet-Based Dual-Branch Network for Image Demoireing" class="thumbnail-image"></span>
+        <span style="background-image:url(https://example.com/image.jpg)" alt="电影推荐 演员推荐" class="thumbnail-image"></span>
     
     
 </a>
@@ -470,7 +469,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="title">Wavelet-Based Dual-Branch Network for Image Demoireing</a></p>
+                            <p class="item-title"><a href="/2023/04/11/%5Bother%5DMovies%20and%20Actors/" class="title">电影推荐 演员推荐</a></p>
                             <p class="item-date"><time datetime="2023-04-10T16:00:00.000Z" itemprop="datePublished">2023-04-11</time></p>
                         </div>
                     </li>
@@ -498,10 +497,10 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2023/04/11/%5Bother%5DMovies%20and%20Actors/" class="thumbnail">
+                            <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="thumbnail">
     
     
-        <span style="background-image:url(https://example.com/image.jpg)" alt="电影推荐 演员推荐" class="thumbnail-image"></span>
+        <span style="background-image:url(https://example.com/image.jpg)" alt="Wavelet-Based Dual-Branch Network for Image Demoireing" class="thumbnail-image"></span>
     
     
 </a>
@@ -510,7 +509,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2023/04/11/%5Bother%5DMovies%20and%20Actors/" class="title">电影推荐 演员推荐</a></p>
+                            <p class="item-title"><a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="title">Wavelet-Based Dual-Branch Network for Image Demoireing</a></p>
                             <p class="item-date"><time datetime="2023-04-10T16:00:00.000Z" itemprop="datePublished">2023-04-11</time></p>
                         </div>
                     </li>
