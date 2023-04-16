@@ -179,6 +179,111 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg)" alt="Tensor to Image" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://aifengdudexiaojie.github.io/2023/04/16/[Daily%20Code]Tensor-to-Image/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2023-04-16T12:45:10.000Z" itemprop="datePublished">2023-04-16</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/">Tensor to Image</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            实现从张量到图片的保存：
+# pre 为预测的输出张量
+# 处理pred数据 将其处理到0-1之间
+pred_clip = torch.clamp(pred, 0, 1)
+save_name = os.path.join(config.result_dir, name[0])
+# 将值变为0-255
+pred_clip += 0.5 / 255
+# tensor to image 的主要代码
+# 
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2023/04/15/%5Bpaper%5DAn-Efficient-Approach-for-Underwater-Image-Improvement/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://wx2.sinaimg.cn/mw2000/006eM3d0gy1h25piim6j2j30j60m7q5d.jpg)" alt="An Efficient Approach for Underwater Image Improvement" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://aifengdudexiaojie.github.io/2023/04/15/[paper]An-Efficient-Approach-for-Underwater-Image-Improvement/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2023-04-15T09:18:55.000Z" itemprop="datePublished">2023-04-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2023/04/15/%5Bpaper%5DAn-Efficient-Approach-for-Underwater-Image-Improvement/">An Efficient Approach for Underwater Image Improvement</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            An Efficient Approach for Underwater Image Improvement: Deblurring,Dehazing, and Color Correction目的：为实现实时的处理，需要以一个小的 编码-解码 结构 来处理水下图像 并保持效率使用 离散小波的skip connection 和 通道注意力 来解决 haze 和 color correction
+意
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/" class="thumbnail">
     
     
@@ -463,6 +568,46 @@ im_numpy = np.array(im)
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg)" alt="Tensor to Image" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/" class="title">Tensor to Image</a></p>
+                            <p class="item-date"><time datetime="2023-04-16T12:45:10.000Z" itemprop="datePublished">2023-04-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/04/15/%5Bpaper%5DAn-Efficient-Approach-for-Underwater-Image-Improvement/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://wx2.sinaimg.cn/mw2000/006eM3d0gy1h25piim6j2j30j60m7q5d.jpg)" alt="An Efficient Approach for Underwater Image Improvement" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/04/15/%5Bpaper%5DAn-Efficient-Approach-for-Underwater-Image-Improvement/" class="title">An Efficient Approach for Underwater Image Improvement</a></p>
+                            <p class="item-date"><time datetime="2023-04-15T09:18:55.000Z" itemprop="datePublished">2023-04-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/" class="thumbnail">
     
     
@@ -520,26 +665,6 @@ im_numpy = np.array(im)
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://wx3.sinaimg.cn/mw2000/006eM3d0gy1h25pik0nhxj30sg0sgjy9.jpg)" alt="Wavelet-Based Dual-Branch Network for Image Demoireing" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="title">Wavelet-Based Dual-Branch Network for Image Demoireing</a></p>
-                            <p class="item-date"><time datetime="2023-04-10T16:00:00.000Z" itemprop="datePublished">2023-04-11</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -552,7 +677,7 @@ im_numpy = np.array(im)
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">4</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">6</span></li></ul>
         </div>
     </div>
 
@@ -562,7 +687,7 @@ im_numpy = np.array(im)
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily-code/" rel="tag">daily code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/papaer/" rel="tag">papaer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -572,7 +697,7 @@ im_numpy = np.array(im)
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a>
+            <a href="/tags/daily-code/" style="font-size: 20px;">daily code</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/papaer/" style="font-size: 10px;">papaer</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a>
         </div>
     </div>
 

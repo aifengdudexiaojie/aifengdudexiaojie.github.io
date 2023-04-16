@@ -6,26 +6,17 @@
     
 
     
-    <title>DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK | Hexo</title>
+    <title>标签: daily code | Hexo</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="paper" />
-    
-    <meta name="description" content="DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK在不考虑难度多样性的情况下平等地对待所有区域，目前已经触及顶端极限了。为了解决以上问题，提出了一种方法来区分图像内每个图像区域难度。 提出一种双向SR网络。分别聚焦简单和困难 处理区域。争对如何判断一个区域地难易，提出了一种基于PSNR先验地图像难度识别网络。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK">
-<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Difficulty-aware%20Image%20Super%20Resolution/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://aifengdudexiaojie.github.io/tags/daily-code/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK在不考虑难度多样性的情况下平等地对待所有区域，目前已经触及顶端极限了。为了解决以上问题，提出了一种方法来区分图像内每个图像区域难度。 提出一种双向SR网络。分别聚焦简单和困难 处理区域。争对如何判断一个区域地难易，提出了一种基于PSNR先验地图像难度识别网络。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg">
-<meta property="article:published_time" content="2023-04-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-12T08:48:42.335Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg">
     
 
     
@@ -164,216 +155,135 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    未分类
+    <i class="icon fa fa-tag"></i>标签: <em>daily code</em>
     </h1>
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-[paper]Difficulty-aware Image Super Resolution" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+                            
+
+    
+    
         
-            <header class="article-header">
-                
+        
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="/archives/2023" class="archive-year"><i class="icon fa fa-calendar-o"></i>2023</a>
+            </div>
+            <div class="archives">
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg)" alt="Tensor to Image" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://aifengdudexiaojie.github.io/2023/04/16/[Daily%20Code]Tensor-to-Image/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2023-04-16T12:45:10.000Z" itemprop="datePublished">2023-04-16</time></div>
+        </div>
+        
     
         <h1 class="article-title" itemprop="name">
-        DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK
+        <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/">Tensor to Image</a>
         </h1>
     
 
-            </header>
-        
-        
-            <div class="article-meta">
-                
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" class="article-date">
-       <time datetime="2023-04-10T16:00:00.000Z" itemprop="datePublished">2023-04-11</time>
-    </a>
-  </div>
-
-
-<div class="article-date">
-  <i class="fa fa-calendar-plus-o"></i>
-  <a href="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/" class="article-date">
-     <time datetime="2023-04-12T08:48:42.335Z" itemprop="dateModified">2023-04-12</time>
-  </a>
-</div>
-
-
-                
-
-                
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link-link" href="/tags/paper/" rel="tag">paper</a>
+        <p class="article-excerpt">
+            实现从张量到图片的保存：
+# pre 为预测的输出张量
+# 处理pred数据 将其处理到0-1之间
+pred_clip = torch.clamp(pred, 0, 1)
+save_name = os.path.join(config.result_dir, name[0])
+# 将值变为0-255
+pred_clip += 0.5 / 255
+# tensor to image 的主要代码
+# 
+        </p>
     </div>
-
-                
-
-                
-
-            </div>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-            
-
-            
-
-            
-
-            <h1 id="DIFFICULTY-AWARE-IMAGE-SUPER-RESOLUTION-VIA-DEEP-ADAPTIVE-DUAL-NETWORK"><a href="#DIFFICULTY-AWARE-IMAGE-SUPER-RESOLUTION-VIA-DEEP-ADAPTIVE-DUAL-NETWORK" class="headerlink" title="DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK"></a>DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK</h1><p>在不考虑难度多样性的情况下平等地对待所有区域，目前已经触及顶端极限了。<br><br>为了解决以上问题，提出了一种方法来区分图像内每个图像区域难度。</p>
-<p>提出一种双向SR网络。分别聚焦简单和困难 处理区域。<br><br>争对如何判断一个区域地难易，提出了一种基于PSNR先验地图像难度识别网络。来自适应地强制执行双向SR网络。</p>
-<p>Code and results are available at <a target="_blank" rel="noopener" href="https://github.com/xzwlx">here</a></p>
-<p>【7】利用<strong>简化的残差</strong>块建立了巨大的SR模型EDSR，对恢复质量有了很大的提高<br><br>【14】提出了基于残差密集块（RDB）的残差密集网络（RDN）来充分利用所有卷积层的层次特征。<br>【10】提出了一种残差（RIR）来解决训练深度SR网络的困难，并提出了一种信道注意机制，通过区分跨信道处理丰富的低频信息来提高SR网络的表示能力。</p>
-<p>存在的问题：<br><br>使用统一的模型来处理图像的所有区域。一般来说图像存在平滑区域，该部分去实现高分是简单的。&#x3D;&gt;模糊图像中包含有较小模糊的区域 相似的 这部分是相对好处理的，且该部分需要集中处理的是高频部分。<br><br>重模型相对简单模型在容易处理的区域的效果并不好。</p>
-<p>文章的主要贡献：</p>
-<ul>
-<li>我们提出了一个图像难度识别网络，该网络充分探索了PSNR先验知识，提出了一个精确的难度分类。</li>
-<li>提出了一种新的困难感知SR方法，该方法可以区分地处理图像的每个区域以实现精确的SR</li>
-</ul>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>三个主要模块：</p>
-<ul>
-<li>划分困难程度的 difficulty identifier module DIM</li>
-<li>掩码生成器 mask generator</li>
-<li>双SR网络 dual-way SR network</li>
-</ul>
-<p>DIM用于识别图像 regions&#x2F;patches 的超分难度 以及之后的 mask 生成 <br><br>Dual-way SR部分包含两个独立的SR模型</p>
-<p>分别记为CB 处理困难patches 和 PB 处理简单patches</p>
-<p>首先将LR低分的完整图像分割成48-48的patches，然后将补丁输入到DIM中<br><br>DIM对每一个patch做难易的判断 表现为给其一个难度概率向量(属于某个难度的可能性)。</p>
-<p>最终两个分支处理相应的部分后，由mask 生成器去自适应地选择 HR patches 去填充帮助恢复full image</p>
-<h3 id="Difficulty-Identifier-Module-DIM"><a href="#Difficulty-Identifier-Module-DIM" class="headerlink" title="Difficulty Identifier Module DIM"></a>Difficulty Identifier Module DIM</h3><p>使用双边缘(Bicubic) PSNR 得分作为SR难度指标 <br><br>为了利用先验PSNR知识，将SR困难识别问题建模为一个分类问题。使用LeNet作为DIM地基本主干来训练DIM</p>
-<p>具体的：<br><br>采用Bicubic PSNR值作为 target标签用于训练 <br><br>首先从数据集中裁剪HR 和 LR 对，用Bicubic upscale patches <br><br>然后，我们计算所有样本的Bicubic PSNR值，并将其值分为5类，然后将patches 的难度难度级别转变为一个一维的向量 one-hot vector <br><br>对于每个patch的输出是一个概率向量{p1,p2,p3,p4,p5}</p>
-<h3 id="Mask-Generator"><a href="#Mask-Generator" class="headerlink" title="Mask Generator"></a>Mask Generator</h3><p>Mask 利用概率向量来帮助 framework 强制执行 dual-way SR</p>
-<p>其mask的使用 应用在网络之后，以实现对特征区域的挑选弥补。<br><br>mask的生成 根据p1的概率决定：<br><br>$$mask(\hat{y}) &#x3D; \begin{cases}<br>1, &amp; max(\hat{y})&lt;&#x3D;&#x3D;p_{1} \<br>0, &amp; otherwise\<br>\end{cases}$$</p>
-<p>从而dual-way SR的自适应过程可以描述为：<br><br>$I_{sr}&#x3D;(1-mask)×F_{CB}(I_{lr})+mask×F_{PB}(I_{lr})$ <br><br>即mask为1的区域是hard-level 较低的区域</p>
-<h3 id="Complex-Branch-and-Plain-Branch"><a href="#Complex-Branch-and-Plain-Branch" class="headerlink" title="Complex Branch and Plain Branch"></a>Complex Branch and Plain Branch</h3><p>CB 部分的 网络为 IDN <br><br>Bicubic interpolation 作为 PB 的分支处理</p>
-<p><strong>优势：</strong> <br></p>
-<ul>
-<li>GPU并行计算</li>
-<li>可以替换两个分支的主干网络以达到跟好的性能</li>
-</ul>
-<img src="/2023/04/11/%5Bpaper%5DDifficulty-aware%20Image%20Super%20Resolution/net.png" class="" title="This is net image">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-        <footer class="article-footer">
-            
-
-
-
-    <a data-url="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Difficulty-aware%20Image%20Super%20Resolution/" data-id="clgdq1s2w0001h4wd9vfxdmoe" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-        </footer>
-    </div>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "author": {
-            "@type": "Person",
-            "name": "John Doe"
-        },
-        "headline": "DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK",
-        "image": "http://aifengdudexiaojie.github.iohttps://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg",
-        "keywords": "paper",
-        "genre": "",
-        "datePublished": "2023-04-11",
-        "dateCreated": "2023-04-11",
-        "dateModified": "2023-04-12",
-        "url": "http://aifengdudexiaojie.github.io/2023/04/11/[paper]Difficulty-aware Image Super Resolution/",
-        "description": "DIFFICULTY-AWARE IMAGE SUPER RESOLUTION VIA DEEP ADAPTIVE DUAL-NETWORK在不考虑难度多样性的情况下平等地对待所有区域，目前已经触及顶端极限了。为了解决以上问题，提出了一种方法来区分图像内每个图像区域难度。
-提出一种双向SR网络。分别聚焦简单和困难 处理区域。争对如何判断一个区域地难易，提出了一种基于PSNR先验地图像难度识别网络。",
-        "wordCount": 136
-    }
-</script>
-
 </article>
+    
 
-    <section id="comments">
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0ly1gs04vabtg4j30u00u0q6k.jpg)" alt="opencv pil numpy" class="thumbnail-image"></span>
+    
     
         
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://aifengdudexiaojie.github.io/2023/04/14/[DailyCode]Opencv%20PIL%20Numpy/">0</span>
+    
+</span>
 
 
     
-    </section>
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            
+            </div>
+            <div class="date"><time datetime="2023-04-14T11:50:00.000Z" itemprop="datePublished">2023-04-14</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/">opencv pil numpy</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            代码高亮问题处理link将highlight.enable 和 prismjs.enable 均设置为 false 
+opencv 读取图片并转为numpy 再转为图像保存：
+# 读取图像
+im = cv2.imread(&#39;test.jpg&#39;)
+# 图像无shape 使用size
+print(im.size)
+# 将图像转为对应数组
+im_numpy = np.array(im)
+
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+
+    </div></section>
 
 
 
@@ -435,29 +345,6 @@
             
         </ul>
     </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            opencv pil numpy
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2023/04/11/%5Bother%5DMovies%20and%20Actors/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">电影推荐 演员推荐</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
-
     
     <div class="widgets-container">
         
@@ -662,13 +549,11 @@
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/04/11/[paper]Difficulty-aware%20Image%20Super%20Resolution/';
-    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
