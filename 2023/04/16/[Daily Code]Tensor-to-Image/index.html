@@ -19,13 +19,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="实现从张量到图片的保存： # pre 为预测的输出张量 # 处理pred数据 将其处理到0-1之间 pred_clip &#x3D; torch.clamp(pred, 0, 1) save_name &#x3D; os.path.join(config.result_dir, name[0]) # 将值变为0-255 pred_clip +&#x3D; 0.5 &#x2F; 255 # tensor to image 的主要代码 #">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw2000/006eM3d0gy1gw7rmw7icqj30hx0hx0ws.jpg">
 <meta property="article:published_time" content="2023-04-16T12:45:10.000Z">
-<meta property="article:modified_time" content="2023-04-16T13:02:29.376Z">
+<meta property="article:modified_time" content="2023-04-17T09:22:03.422Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="daily code">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw2000/006eM3d0gy1gw7rmw7icqj30hx0hx0ws.jpg">
     
 
     
@@ -196,7 +196,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/" class="article-date">
-     <time datetime="2023-04-16T13:02:29.376Z" itemprop="dateModified">2023-04-16</time>
+     <time datetime="2023-04-17T09:22:03.422Z" itemprop="dateModified">2023-04-17</time>
   </a>
 </div>
 
@@ -315,12 +315,12 @@ pred.save(save_name)
             "name": "John Doe"
         },
         "headline": "Tensor to Image",
-        "image": "http://aifengdudexiaojie.github.iohttps://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg",
+        "image": "http://aifengdudexiaojie.github.iohttps://wx1.sinaimg.cn/mw2000/006eM3d0gy1gw7rmw7icqj30hx0hx0ws.jpg",
         "keywords": "daily code",
         "genre": "",
         "datePublished": "2023-04-16",
         "dateCreated": "2023-04-16",
-        "dateModified": "2023-04-16",
+        "dateModified": "2023-04-17",
         "url": "http://aifengdudexiaojie.github.io/2023/04/16/[Daily Code]Tensor-to-Image/",
         "description": "实现从张量到图片的保存：
 # pre 为预测的输出张量
@@ -470,7 +470,7 @@ pred_clip += 0.5 / 255
                             <a href="/2023/04/16/%5BDaily%20Code%5DTensor-to-Image/" class="thumbnail">
     
     
-        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0gy1h25pij1w5zj30sg0sgn2t.jpg)" alt="Tensor to Image" class="thumbnail-image"></span>
+        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0gy1gw7rmw7icqj30hx0hx0ws.jpg)" alt="Tensor to Image" class="thumbnail-image"></span>
     
     
 </a>
@@ -507,10 +507,10 @@ pred_clip += 0.5 / 255
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/" class="thumbnail">
+                            <a href="/2023/04/14/%5BDaily%20Code%5DOpencv%20PIL%20Numpy/" class="thumbnail">
     
     
-        <span style="background-image:url(https://wx1.sinaimg.cn/mw2000/006eM3d0ly1gs04vabtg4j30u00u0q6k.jpg)" alt="opencv pil numpy" class="thumbnail-image"></span>
+        <span style="background-image:url(https://wx4.sinaimg.cn/mw2000/006eM3d0gy1gw7rmvscmtj30ku0ksn3b.jpg)" alt="opencv pil numpy" class="thumbnail-image"></span>
     
     
 </a>
@@ -519,7 +519,7 @@ pred_clip += 0.5 / 255
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2023/04/14/%5BDailyCode%5DOpencv%20PIL%20Numpy/" class="title">opencv pil numpy</a></p>
+                            <p class="item-title"><a href="/2023/04/14/%5BDaily%20Code%5DOpencv%20PIL%20Numpy/" class="title">opencv pil numpy</a></p>
                             <p class="item-date"><time datetime="2023-04-14T11:50:00.000Z" itemprop="datePublished">2023-04-14</time></p>
                         </div>
                     </li>
