@@ -6,26 +6,25 @@
     
 
     
-    <title>Wavelet-Based Dual-Branch Network for Image Demoireing | Hexo</title>
+    <title>Multi-scale and U-shaped Networks for Deblurring | Hexo</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="paper" />
+    <meta name="keywords" content="" />
     
-    <meta name="description" content="Wavelet-Based Dual-Branch Network for Image Demoireing双分支的方法用模块实现。分别为dense 和 dilated 分支 分别用于存储close-range 和 far-range 信息 文章的主要贡献：  所提出的基于小波的双分支网络 方向感知模块 DPM 用于突出摩尔纹区域  相关工作小波方法：有方法认为将小波变换和其逆变换可以视为 池化与">
+    <meta name="description" content="对提出的构及其对图像去模糊的影响比较。并提出一个NFResblock的Block。NFResblock 包括：1.快速傅里叶变换层2.一系列改进的非线性激活自由块组 同时改进了多尺度和U-Net架构 还使用三种不同的损失函数来训练这些架构：Charbonnier Loss, Edge Loss, Frequency Reconstruction Loss 引言NFResblock包括NAFBloc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wavelet-Based Dual-Branch Network for Image Demoireing">
-<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/index.html">
+<meta property="og:title" content="Multi-scale and U-shaped Networks for Deblurring">
+<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Wavelet-Based Dual-Branch Network for Image Demoireing双分支的方法用模块实现。分别为dense 和 dilated 分支 分别用于存储close-range 和 far-range 信息 文章的主要贡献：  所提出的基于小波的双分支网络 方向感知模块 DPM 用于突出摩尔纹区域  相关工作小波方法：有方法认为将小波变换和其逆变换可以视为 池化与">
+<meta property="og:description" content="对提出的构及其对图像去模糊的影响比较。并提出一个NFResblock的Block。NFResblock 包括：1.快速傅里叶变换层2.一系列改进的非线性激活自由块组 同时改进了多尺度和U-Net架构 还使用三种不同的损失函数来训练这些架构：Charbonnier Loss, Edge Loss, Frequency Reconstruction Loss 引言NFResblock包括NAFBloc">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wx3.sinaimg.cn/mw2000/006eM3d0gy1h25pik0nhxj30sg0sgjy9.jpg">
-<meta property="article:published_time" content="2023-04-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-12T08:49:03.542Z">
+<meta property="og:image" content="http://aifengdudexiaojie.github.io/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResnet+.png">
+<meta property="article:published_time" content="2023-05-02T07:54:20.000Z">
+<meta property="article:modified_time" content="2023-05-02T09:48:23.564Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wx3.sinaimg.cn/mw2000/006eM3d0gy1h25pik0nhxj30sg0sgjy9.jpg">
+<meta name="twitter:image" content="http://aifengdudexiaojie.github.io/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResnet+.png">
     
 
     
@@ -169,14 +168,14 @@
 </div>
 
                         <div class="main-body-content">
-                            <article id="post-[paper]Wavelet-Based Dual-Branch Network for Image Demoireing" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Multi-scale-and-U-shaped-Networks-for-Deblurring" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Wavelet-Based Dual-Branch Network for Image Demoireing
+        Multi-scale and U-shaped Networks for Deblurring
         </h1>
     
 
@@ -187,16 +186,16 @@
                 
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="article-date">
-       <time datetime="2023-04-10T16:00:00.000Z" itemprop="datePublished">2023-04-11</time>
+    <a href="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/" class="article-date">
+       <time datetime="2023-05-02T07:54:20.000Z" itemprop="datePublished">2023-05-02</time>
     </a>
   </div>
 
 
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
-  <a href="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" class="article-date">
-     <time datetime="2023-04-12T08:49:03.542Z" itemprop="dateModified">2023-04-12</time>
+  <a href="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/" class="article-date">
+     <time datetime="2023-05-02T09:48:23.564Z" itemprop="dateModified">2023-05-02</time>
   </a>
 </div>
 
@@ -204,11 +203,6 @@
                 
 
                 
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link-link" href="/tags/paper/" rel="tag">paper</a>
-    </div>
-
                 
 
                 
@@ -223,38 +217,46 @@
 
             
 
-            <h1 id="Wavelet-Based-Dual-Branch-Network-for-Image-Demoireing"><a href="#Wavelet-Based-Dual-Branch-Network-for-Image-Demoireing" class="headerlink" title="Wavelet-Based Dual-Branch Network for Image Demoireing"></a>Wavelet-Based Dual-Branch Network for Image Demoireing</h1><p>双分支的方法用模块实现。分别为dense 和 dilated 分支 <br /><br>分别用于存储close-range 和 far-range 信息</p>
-<p>文章的主要贡献：</p>
+            <p>对提出的构及其对图像去模糊的影响比较。并提出一个NFResblock的Block。<br><br>NFResblock 包括：<br><br>1.快速傅里叶变换层<br><br>2.一系列改进的非线性激活自由块组</p>
+<p>同时改进了多尺度和U-Net架构 还使用三种不同的损失函数来训练这些架构：<br><br>Charbonnier Loss, Edge Loss, Frequency Reconstruction Loss</p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>NFResblock包括NAFBlock和FFT Resblock<br><br>NFResnet是基于MIMO-Unet的  NFResnet+基于MultiScale结构<br><br>动机为 模糊和清晰的图像对之间的高频和低频差异。</p>
+<p>ResBlock可能有利于学习高频组件，但低频信息将不会被适当地建模。使用FFT Block [2]以及边缘和频率重建损失来解决这个挑战。</p>
+<p>所提出的deblurring问题包括：</p>
 <ul>
-<li>所提出的基于小波的双分支网络</li>
-<li><strong>方向感知模块</strong> DPM 用于突出摩尔纹区域</li>
+<li>现实数据集</li>
+<li>模糊图像中的long-range空间依赖</li>
+<li>对模糊核的错误估计</li>
+<li>处理轻微模糊的次优解</li>
 </ul>
-<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>小波方法：<br/><br>有方法认为将小波变换和其逆变换可以视为 池化与非池化层 可以保存其结构信息。</p>
-<p>双分支方法：<br/><br><strong>【40】对困难与简单处理的区域进行的划分</strong>  for 超分任务</p>
-<p>纹理移除方法：<br/><br>使用局部滤波器的方法试图删除某些纹理，可同时保持其他高频结构</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>模块内两个分支</p>
-<img src="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/net.png" class="" title="This is net image">
-<p>两个分支分别处理不同的频率范围<br>密集分支用于 close-range 纹理 <br /><br>膨胀分支用于 far-range 纹理</p>
-<p>发现较高频域包含的摩尔纹较少&#x3D;&gt;为恢复摩尔纹提供关键信息。</p>
-<p>整体方法：<br><br>小波变换等级设置为2。<br><br>原始RGB输入被转化为48个子带，每个颜色通道转为16个通道 <br></p>
-<p><strong>将高低两个频子带链接起来，而非单独处理每个频带。</strong>因为每个图像的退化模式差异很大，很难找到手动的阈值进行分离。</p>
-<h3 id="密集分支"><a href="#密集分支" class="headerlink" title="密集分支"></a>密集分支</h3><p>通过旁路链接设计+特征重用<br>从RDN【69】中的残差块中添加一个DPM <strong>方向感知模块</strong> <br><br>每个残余块包含2个小模块 <br><br>每个小模块包含5个卷积，每层的输入包含之前所有层的输出 <br><br>DPM用于寻找摩尔纹的方向，其输出和每个密集块的输出相乘，以加权的方式融入到后面的输入中。</p>
-<img src="/2023/04/11/%5Bpaper%5DWavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/DPM.png" class="" title="This is DPM">
-<br>
-### 膨胀卷积
-用膨胀卷积克服下采样以及池化带来的细节损失 for 更好的感受野
-<br>
-该部分仅包含两层：
-- 3×3膨胀卷积
-- 3×3卷积
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p><strong>NFResblock</strong><br><br><strong>FFT-ResBlock：</strong><br><br>相比于清晰图像，模糊图像有更多的低频信息。同时CNN的有效感受野较为有限(该部分可以联想到利用小波的分解来变相的扩大网络的感受野，从而提升网络的性能)。CNN中的ResBlock可能缺乏对低频的建模能力(有利于学习高频组件 残差结构)。因此，ResBlock未能捕获低频信息是减少模糊和清晰图像之间的不一致性的一个重要限制。<br><br>为了解决这个问题，添加了另一个基于信道级快速傅里叶变换（FFT）的分支。这有助于捕获频域中的全局信息。首先，利用FFT将图像从空间域转换为频域。然后，像一个残差分支一样，频域特征被传递给卷积块，然后是一个非线性激活函数。</p>
+<p><strong>NAF Block：</strong><br><br>NAF Block[1]是一种新的非线性激活自由网络的卷积构建块，即NAFNet[1]。<br><br>为了避免架构过于复杂，该Block avoid 使用任何激活函数。<br><br>NAF Block 有两个变种：NAF-U &amp; NAF-D</p>
+<p><strong>NFResnet+:</strong><br>多尺度结构，每个尺度上的input图都是前一张降采样本版。每层上都有NFResblocks。包括 NAF-U 和 NAF-D 将其放在卷积层之间形成残差结构。</p>
+<img src="./Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResnet+.png">
+<img src="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResnet+.png" class="">
 
-<p>为了应对出现的网格效应，一般的混合设计不适应。 <br><br>采取【1，2，3，5，8，13，21】7个不同的膨胀率，同时应用一些香草卷积进一步减少网格伪影。</p>
-<h3 id="DPM"><a href="#DPM" class="headerlink" title="DPM"></a>DPM</h3><p>使用DPM来生成注意力图，以突出摩尔纹的空间分布，并施以监督。<br>8个方向+两个卷积层 相当于注意力操作。<br><br>其权重系数由输入的特征经过卷积处理后得到。<br><br>认为其方向信息的突出作用仅在第二阶段才表现</p>
-<h3 id="LOSS-FUNC"><a href="#LOSS-FUNC" class="headerlink" title="LOSS FUNC"></a>LOSS FUNC</h3><p>L1 + 感知 + 小波损失 <br></p>
-<p>Wavelet Loss:<br><br>在子带层面上使用MSE计算 将高低频区分开进行计算。同时为了防止小波系数收敛到0设置一个下限$l_{detail}$<br><br>$L_{wavelet}&#x3D;l_{MSE}+l_{detail}$</p>
-<h3 id="Attention-LOSS"><a href="#Attention-LOSS" class="headerlink" title="Attention LOSS"></a>Attention LOSS</h3><p>$L_{a}&#x3D;||A-d(M)||^{2}_{2}$ <br><br>其中A是DPM输出 in network <br><br>M是摩尔纹的mask，为摩尔纹图像与真值之间的差值 并通过了一定的阈值计算 <br><br>d(.)为下采样操作以确保尺寸对齐</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>256-256 3 通过Haar 得到48个大小为64-64小波子带 <br><br>使用7个双分支模块 DPM 添加到第4个密集分支中以感知摩尔纹理 <br><br>lr 2&gt;-4  每20 epoch 除10</p>
-<h3 id="消融实验"><a href="#消融实验" class="headerlink" title="消融实验"></a>消融实验</h3><p>膨胀卷积的提升相对较大，DPM与小波变换和逆变换提升较为明显</p>
+
+<p>两个变种NAF-U &amp; NAF-D 放在改进的Resblock中以成为NFResblock：<br><img src="./Multi-scale-and-U-shaped-Networks-for-Deblurring/NAFU.png"></p>
+<img src="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/NAFU.png" class="">
+
+
+<img src="./Multi-scale-and-U-shaped-Networks-for-Deblurring/NAFD.png">
+<img src="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/NAFD.png" class="">
+
+
+<img src="./Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResblock.png">
+<img src="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResblock.png" class="">
+
+<p>其中 NFResblock 的右侧分支为快速傅里叶变换</p>
+<p><strong>文章并未详细结构两个变种的设计动机，仅仅是改进非线性激活自由块</strong></p>
+<h3 id="LOSS-FUNC"><a href="#LOSS-FUNC" class="headerlink" title="LOSS FUNC"></a>LOSS FUNC</h3><img src="./Multi-scale-and-U-shaped-Networks-for-Deblurring/loss.png">
+<img src="/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/loss.png" class="">
+
+<p>loss 方面加入了FFT 和 Edge 的监督 提升明显。数据集使用的是DVD补帧。</p>
+<p>实验部分对NAFU&amp;D进行了补充：<br><br>NAF-U：使用简单的通道注意力以捕捉long-range依赖<br><br>NAF-D：去掉了重像素注意和通道注意模型，在NAF-D中使用简单门</p>
+<p>NFResnet删除了特征注意模块、浅层卷积模块、额外的跳跃连接和在MIMO-Unet [15]中提出的编码器-解码器架构。<BR><br>为了保留MIMO的结构，我们使用一组包含正常卷积和NFResBlock的卷积块（参见图3），并将其命名为NFResNet+。因此，NFResNet有13.84M的参数，而NFResNet+（包含NAF-Down块）有13.60M的参数。</p>
+<p>我们没有在我们的NFResNet+中使用完整的NAF结构，因为我们假设有一个特征注意层就足以让模型关注模糊的区域。我们观察到，在参数较少的NFResNet+的情况下，获得了更好的PSNR值。</p>
+<p>较好的结果可能来源于删除了额外的功能注意模块和跳过连接。</p>
+<p><strong>文章没有NFResnet的网络结构图，难以判断其与MIMO-UNet的区别。一般的在MIMO-UNet上改进应为对ResBlock的替换以及文章中描述的删除部分。</strong></p>
 
         </div>
         <footer class="article-footer">
@@ -262,7 +264,7 @@
 
 
 
-    <a data-url="http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/" data-id="clgdq1s310004h4wdgug5etps" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://aifengdudexiaojie.github.io/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/" data-id="clh63lf1e0000ukwd106qh29m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -332,22 +334,18 @@
             "@type": "Person",
             "name": "John Doe"
         },
-        "headline": "Wavelet-Based Dual-Branch Network for Image Demoireing",
-        "image": "http://aifengdudexiaojie.github.iohttps://wx3.sinaimg.cn/mw2000/006eM3d0gy1h25pik0nhxj30sg0sgjy9.jpg",
-        "keywords": "paper",
+        "headline": "Multi-scale and U-shaped Networks for Deblurring",
+        "image": "http://aifengdudexiaojie.github.io./Multi-scale-and-U-shaped-Networks-for-Deblurring/NFResnet+.png",
+        "keywords": "",
         "genre": "",
-        "datePublished": "2023-04-11",
-        "dateCreated": "2023-04-11",
-        "dateModified": "2023-04-12",
-        "url": "http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based Dual-Branch Network for Image Demoireing/",
-        "description": "Wavelet-Based Dual-Branch Network for Image Demoireing双分支的方法用模块实现。分别为dense 和 dilated 分支 分别用于存储close-range 和 far-range 信息
-文章的主要贡献：
-
-所提出的基于小波的双分支网络
-方向感知模块 DPM 用于突出摩尔纹区域
-
-相关工作小波方法：有方法认为将小波变换和其逆变换可以视为 池化与",
-        "wordCount": 120
+        "datePublished": "2023-05-02",
+        "dateCreated": "2023-05-02",
+        "dateModified": "2023-05-02",
+        "url": "http://aifengdudexiaojie.github.io/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/",
+        "description": "对提出的构及其对图像去模糊的影响比较。并提出一个NFResblock的Block。NFResblock 包括：1.快速傅里叶变换层2.一系列改进的非线性激活自由块组
+同时改进了多尺度和U-Net架构 还使用三种不同的损失函数来训练这些架构：Charbonnier Loss, Edge Loss, Frequency Reconstruction Loss
+引言NFResblock包括NAFBloc",
+        "wordCount": 72
     }
 </script>
 
@@ -428,16 +426,12 @@
         
 <nav id="article-nav">
     
-        <a href="/2023/04/11/%5Bother%5DMovies%20and%20Actors/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            电影推荐 演员推荐
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
+        <a href="/2023/04/17/%5Bpaper%5DBeyond-Deep-Residual-Learning-for-Image-Restoration/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Beyond Deep Residual Learning for Image Restoration</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
     
 </nav>
 
@@ -645,7 +639,7 @@
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/04/11/[paper]Wavelet-Based%20Dual-Branch%20Network%20for%20Image%20Demoireing/';
+    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/05/02/Multi-scale-and-U-shaped-Networks-for-Deblurring/';
     
     (function() {
     var dsq = document.createElement('script');
