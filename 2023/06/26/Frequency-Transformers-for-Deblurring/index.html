@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Frequency Transformers for Deblurring | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="-frequency -deblurring" />
+    
+    <meta name="description" content="Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring一种有效的方法 用于频域中的transformers 用法 motivated 来源于：两个信号在空间域的相关性等价于其在频域的相关性。 &#x3D;&gt;探索 有效的频域自注意力求解器 用元素点成而不是空间域的矩阵相乘 &#x3D;&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Frequency Transformers for Deblurring">
+<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring一种有效的方法 用于频域中的transformers 用法 motivated 来源于：两个信号在空间域的相关性等价于其在频域的相关性。 &#x3D;&gt;探索 有效的频域自注意力求解器 用元素点成而不是空间域的矩阵相乘 &#x3D;&amp;gt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/f1.png">
+<meta property="article:published_time" content="2023-06-26T01:24:02.000Z">
+<meta property="article:modified_time" content="2023-06-27T02:22:17.229Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="-frequency -deblurring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/f1.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/code/index.html">index.code</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/paper/index.html">index.paper</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/other/index.html">index.other</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Frequency-Transformers-for-Deblurring" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Frequency Transformers for Deblurring
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2023/06/26/Frequency-Transformers-for-Deblurring/" class="article-date">
+       <time datetime="2023-06-26T01:24:02.000Z" itemprop="datePublished">2023-06-26</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2023/06/26/Frequency-Transformers-for-Deblurring/" class="article-date">
+     <time datetime="2023-06-27T02:22:17.229Z" itemprop="dateModified">2023-06-27</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/frequency-deblurring/" rel="tag">-frequency -deblurring</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Efficient-Frequency-Domain-based-Transformers-for-High-Quality-Image-Deblurring"><a href="#Efficient-Frequency-Domain-based-Transformers-for-High-Quality-Image-Deblurring" class="headerlink" title="Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring"></a>Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring</h1><p>一种有效的方法 用于频域中的transformers 用法</p>
+<p>motivated 来源于：<br><br>两个信号在空间域的相关性等价于其在频域的相关性。</p>
+<p>&#x3D;&gt;探索 有效的频域自注意力求解器 用元素点成而不是空间域的矩阵相乘</p>
+<p>&#x3D;&gt;用JPEG压缩算法来实现门控系统用于 鉴别那些低频和高频信息应该保留</p>
+<p>Transformers的问题在于使用更小的tokens来降低计算量的同时，会失去很好的long-range的特征信息。在处理高分辨图像时会导致显著的伪影从而限制性能。</p>
+<p>CNN的解决long-range方式，一般通过降低分辨率 但是这样的方式会丢失信息。<br><br>有集中方法通过计算特征数[29][30]上的缩放点积注意力来降低计算代价。&#x3D;&gt;这种方式不能很好地探索空间信息。</p>
+<h3 id="In-this-paper："><a href="#In-this-paper：" class="headerlink" title="In this paper： "></a>In this paper： <br></h3><p>缩放地点乘积注意力&lt;降分辨率后的乘积注意力&gt;的本质是 计算点与点之间的相关性。<br><br>&#x3D;&gt;一个token的query和所有tokens的key之间的关联<br><br>而这一操作可以通过重新排列 tokens的序列 后用卷积来实现。</p>
+<p>基于该观察 以及 <strong>卷积定理：</strong> 空间域的卷积 等于频域的点积</p>
+<p>开发了一种有效的基于频域的自注意求解器（FSAS），通过元素乘积运算代替矩阵乘法来估计尺度上的点乘注意。&#x3D;&gt;降低了时间复杂度</p>
+<p>问题：简单的使用前馈网络无法得到良好的结果。为此开发了一种简单而有效的基于区分频域的FFN（DFFN）。该方法使用JPEG压缩算法，以判别应该保留那种高低频信息。</p>
+<p>问题：<em>浅层特征往往具包含模糊效果 blur effects</em> 将缩放点积注意力应用在浅层特征不能有效地探索 全局的 清晰的 内容。 <br><br>&#x3D;&gt;由于深层特征比浅层特征更加清晰。为此设计一种非对称的网络体现结构。 FSAS仅用于解码器模块。</p>
+<h3 id="contributions："><a href="#contributions：" class="headerlink" title="contributions："></a>contributions：</h3><p>开发了一种有效的基于频域的自注意求解器来estimate  scaled dot-product attention。 降低空间时间复杂度并有效且高效。<br><br>提出了一种简单而有效的基于JPEG压缩算法的基于鉴别频域的FFN，以鉴别确定哪些低频和高频信息应该被保留为潜在的清晰图像恢复。<br><br>我们开发了一种基于编码器和解码器网络的非对称网络体系结构，其中基于频域的自注意求解器仅用于解码器模块，以实现更好的图像去模糊。<br></p>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p><strong>Frequency domain-based self-attention solver</strong><br></p>
+<p>$V_{att}&#x3D;softmax(\frac{QK^{T}}{\sqrt{CHW}})V$</p>
+<p>认为 $(QK^{T}_{i,j})&#x3D;&lt;q_{i},k_{j}&gt;$ 可以用点积去代替矩阵乘积</p>
+<p>将矩阵操作用内积进行替换，自注意力中的 $QK^{T}$ 中的第i元素均可通过卷积得到</p>
+<p>将Q和 K 进行reshape 后再进行转置</p>
+<p>根据卷积定理，两个信号在空间域内的相关性或卷积等价于它们在频域内的一个元素级乘积。因此，一个自然的问题是，我们能否通过频域上的元素乘积运算来有效地估计注意映射，而不是计算空间域上 $QK^{T}$ 的矩阵乘法？</p>
+<p>&#x3D;&gt; 开发了一种有效的基于频域的自注意力求解器。<br><br>首先 用1-1 point-wise 卷积 + 3-3 depth-wise 卷积获得Fq Fk Fv <br><br>然后用傅里叶变换 对 Fq 和 Fk 进行变换对变换后的特征进行计算q k 之间的关联性。<br><br>在通过卷积操作得到频域上的关联性后再用你逆变换将其转变回来。</p>
+<p>从而 公式可以变为： $V_{att}&#x3D;L(A)F_{v}$ 其中L()表示归一化 A表示在频域计算关联性后通过逆变换得到的新特征。</p>
+<p>最终的FSAS输出为：$X_{att}&#x3D; X + Conv_{1-1}(V_{att})$</p>
+<p><strong>Discriminative frequency domain-based FFN</strong> <br><br>认为 并不是所有的高频信息和低频信息都有助于帮助恢复清晰图像的重建，从而开发一个DFFN 用于自适应地决定那些频率信息应该被保留。</p>
+<p>在JPEG压缩算法的激励下，我们引入了一个可学习的量化矩阵W，并通过JPEG压缩的逆方法进行学习，以确定应该保留哪些频率信息。建议的DFFN可以表述为：</p>
+<img src="/2023/06/26/Frequency-Transformers-for-Deblurring/f1.png" class="">
+
+<img src="./Frequency-Transformers-for-Deblurring/f1.png">
+
+<p>其中 $P$ 和 $P^{-1}$ 分别表示 JPEG方法中的展开和折叠操作。</p>
+<p><strong>Asymmetric encoder-decoder network</strong> <br><br>注意到编码器模块提取的特征是浅层的，与编码器模块的深度特征相比，通常包含模糊效应。而模糊通常会改变两个相似的patch。<br><br>&#x3D;&gt;因此，将FSAS放置在编码器中，可能并不能获取像素内部的相关性。从而将其放置在解码端。</p>
+<h3 id="分析和讨论"><a href="#分析和讨论" class="headerlink" title="分析和讨论"></a>分析和讨论</h3>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/" data-id="clmuejz3r0008v0wd82o8brad" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "John Doe"
+        },
+        "headline": "Frequency Transformers for Deblurring",
+        "image": "http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/f1.png",
+        "keywords": "-frequency -deblurring",
+        "genre": "",
+        "datePublished": "2023-06-26",
+        "dateCreated": "2023-06-26",
+        "dateModified": "2023-06-27",
+        "url": "http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/",
+        "description": "Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring一种有效的方法 用于频域中的transformers 用法
+motivated 来源于：两个信号在空间域的相关性等价于其在频域的相关性。
+&#x3D;&gt;探索 有效的频域自注意力求解器 用元素点成而不是空间域的矩阵相乘
+&#x3D;&gt",
+        "wordCount": 122
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2023/06/29/FFA-Net-Feature-Fusion-for-Dehazing/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            FFA-Net Feature Fusion for Dehazing
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2023/06/07/Frequency-Selection-for-Deblurring/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Frequency Selection for Deblurring</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/22/Recruitment/" class="thumbnail">
+    
+    
+        <span style="background-image:url(./Recruitment/s2.png)" alt="Recruitment" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/22/Recruitment/" class="title">Recruitment</a></p>
+                            <p class="item-date"><time datetime="2023-09-22T08:46:01.000Z" itemprop="datePublished">2023-09-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/05/NIQE/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/05/NIQE/" class="title">NIQE</a></p>
+                            <p class="item-date"><time datetime="2023-09-05T01:21:18.000Z" itemprop="datePublished">2023-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-pre-design-model/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-pre-design-model/" class="title">Java pre design model</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:11:24.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-design-model-1/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-design-model-1/" class="title">Java design model 1</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:05:39.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/10/Deblurring-with-texture/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/10/Deblurring-with-texture/" class="title">Deblurring with texture</a></p>
+                            <p class="item-date"><time datetime="2023-08-10T02:05:26.000Z" itemprop="datePublished">2023-08-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency-deblurring/" rel="tag">-frequency -deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hazing-feature-fusion/" rel="tag">-hazing -feature fusion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NRIQA/" rel="tag">NRIQA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily-code/" rel="tag">daily code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-SR/" rel="tag">paper SR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-dual-branch-denoising/" rel="tag">paper dual-branch denoising</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-frequency-deblurring/" rel="tag">paper frequency deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-multi-branch-defocus/" rel="tag">paper multi-branch defocus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-wavelet/" rel="tag">paper wavelet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recruitment/" rel="tag">recruitment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/" rel="tag">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wavelet-sod/" rel="tag">wavelet sod</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/frequency-deblurring/" style="font-size: 10px;">-frequency -deblurring</a> <a href="/tags/hazing-feature-fusion/" style="font-size: 10px;">-hazing -feature fusion</a> <a href="/tags/NRIQA/" style="font-size: 10px;">NRIQA</a> <a href="/tags/daily-code/" style="font-size: 15px;">daily code</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a> <a href="/tags/paper-SR/" style="font-size: 10px;">paper SR</a> <a href="/tags/paper-dual-branch-denoising/" style="font-size: 10px;">paper dual-branch denoising</a> <a href="/tags/paper-frequency-deblurring/" style="font-size: 10px;">paper frequency deblurring</a> <a href="/tags/paper-multi-branch-defocus/" style="font-size: 10px;">paper multi-branch defocus</a> <a href="/tags/paper-wavelet/" style="font-size: 15px;">paper wavelet</a> <a href="/tags/recruitment/" style="font-size: 10px;">recruitment</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/wavelet-sod/" style="font-size: 10px;">wavelet sod</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2023 John Doe</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/06/26/Frequency-Transformers-for-Deblurring/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

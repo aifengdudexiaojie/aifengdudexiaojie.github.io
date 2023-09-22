@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Deblurring with texture | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="summary" />
+    
+    <meta name="description" content="Different papers about textureIterative Dual CNNs for Image Deblurring:将deblurring分为两个任务：deblurring和detail restoration 细节纹理部分利用浅而宽的特征without下采样&#x3D;&gt;仅提取图像纹理特征问题：直接从RGB 空间域提取纹理特征 有低频信息干扰 MFC-Net: M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deblurring with texture">
+<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/08/10/Deblurring-with-texture/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Different papers about textureIterative Dual CNNs for Image Deblurring:将deblurring分为两个任务：deblurring和detail restoration 细节纹理部分利用浅而宽的特征without下采样&#x3D;&gt;仅提取图像纹理特征问题：直接从RGB 空间域提取纹理特征 有低频信息干扰 MFC-Net: M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-10T02:05:26.000Z">
+<meta property="article:modified_time" content="2023-08-18T01:37:05.147Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="summary">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/code/index.html">index.code</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/paper/index.html">index.paper</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/other/index.html">index.other</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Deblurring-with-texture" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Deblurring with texture
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2023/08/10/Deblurring-with-texture/" class="article-date">
+       <time datetime="2023-08-10T02:05:26.000Z" itemprop="datePublished">2023-08-10</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2023/08/10/Deblurring-with-texture/" class="article-date">
+     <time datetime="2023-08-18T01:37:05.147Z" itemprop="dateModified">2023-08-18</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/summary/" rel="tag">summary</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Different-papers-about-texture"><a href="#Different-papers-about-texture" class="headerlink" title="Different papers about texture"></a>Different papers about texture</h1><h3 id="Iterative-Dual-CNNs-for-Image-Deblurring"><a href="#Iterative-Dual-CNNs-for-Image-Deblurring" class="headerlink" title="Iterative Dual CNNs for Image Deblurring:"></a>Iterative Dual CNNs for Image Deblurring:</h3><p>将deblurring分为两个任务：deblurring和detail restoration</p>
+<p>细节纹理部分利用浅而宽的特征without下采样&#x3D;&gt;仅提取图像纹理特征<br><br>问题：直接从RGB 空间域提取纹理特征 有低频信息干扰</p>
+<h3 id="MFC-Net-Multi-scale-fusion-coding-network-for-Image-Deblurring"><a href="#MFC-Net-Multi-scale-fusion-coding-network-for-Image-Deblurring" class="headerlink" title="MFC-Net: Multi-scale fusion coding network for Image Deblurring"></a>MFC-Net: Multi-scale fusion coding network for Image Deblurring</h3><p>引入了上下文损失和感知损失来增强模型在局部纹理上的恢复</p>
+<p>内容损失 L2 + 感知损失 VGG19 特征层面L2</p>
+<h3 id="MSSNet-Multi-Scale-Stage-Network-for-Single-Image-Deblurring"><a href="#MSSNet-Multi-Scale-Stage-Network-for-Single-Image-Deblurring" class="headerlink" title="MSSNet: Multi-Scale-Stage Network for Single Image Deblurring"></a>MSSNet: Multi-Scale-Stage Network for Single Image Deblurring</h3><p>frequency reconstruction loss 被用于修复 high-frequency details from blurred image by 最小化频域内 模糊图像和清晰图像之间的差距。</p>
+<h3 id="Attribute-aware-Face-Aging-with-Wavelet-based-Generative-Adversarial-Networks"><a href="#Attribute-aware-Face-Aging-with-Wavelet-based-Generative-Adversarial-Networks" class="headerlink" title="Attribute-aware Face Aging with Wavelet-based Generative Adversarial Networks"></a>Attribute-aware Face Aging with Wavelet-based Generative Adversarial Networks</h3><p>引入小波变换WPT wavelet packet transform  在频域的多尺度上捕获于年龄相关的纹理细节capturing age-related texture details 来生成图像的视觉保真度improve the visual fidelity of generated images</p>
+<p>为了增强老化细节，将老化迹象视为局部纹理，采用小波变换有效地提取频域空间中的多个尺度特征。</p>
+<p>提取纹理细节in frequency for 生成fine-grain 老化效应细节。<br><br>为了让生成器 吸收 输入人脸图像的语义信息，采用基于小波的条件鉴别器。<br><br>该鉴别器主要有两个功能：</p>
+<ul>
+<li>区分合成和真实人脸</li>
+<li>检查输出的人脸属性是否与输入人脸属性一致</li>
+</ul>
+<p>具体操作：采用多层WPT 并将每一个分解得到的小波系数输入到鉴别器中，且小波信息仅用于判别而非预测和重建。</p>
+<p>为了鉴别生成器中保留属性的能力，将生成器中得到的属性也输入到鉴别器中。最后合成单一的张量用于计算对抗损失。<br><br>优点：计算成本降低，利用多尺度优势，提高生成图像的视觉保真度。</p>
+<h3 id="Wavelet-Based-Dual-Branch-Network-for-Image-Demoir´eing"><a href="#Wavelet-Based-Dual-Branch-Network-for-Image-Demoir´eing" class="headerlink" title="Wavelet-Based Dual-Branch Network for Image Demoir´eing"></a>Wavelet-Based Dual-Branch Network for Image Demoir´eing</h3><p>将四个方向感知扩展到8个方向，即增加四个对角方向，提高网络 检测倾斜摩尔纹方向的能力。<br><br>为每个方向增加权重可以区分不同信息的重要性。</p>
+<p>Deep Cascaded Bi-Network for Face Hallucination</p>
+<p>从许多其他低级视觉任务中，小波变换被用于保存纹理细节或用于纹理细节的修复。小波相关的损失也被设计出来以获取更好的纹理细节。</p>
+<h1 id="Asymmetric-convolution"><a href="#Asymmetric-convolution" class="headerlink" title="Asymmetric convolution"></a>Asymmetric convolution</h1><p>观察到正方形卷积会在交叉处拥有更大的权重。利用水平和垂直的非对称卷积可以顺势加强这种现象。</p>
+<p>非对称卷积通常用于 近似一个方形卷积(即一般卷积) 用于 压缩 和 加速</p>
+<p>有证明说 d-d 卷积可以被因式分解为1-d和d-1 以减少参数</p>
+<p>在不分解任何层作为架构设计的一部分，而是用于丰富特征空间。</p>
+<p>加强局部关键特征的影响 并 减少模型训练花费</p>
+<p>应用两种非对称卷积 来增强水平和垂直方向上的局部特征。<br>&#x3D;&gt;motion blur 是一种方向性的模糊 需要水平和垂直的非堆成卷积来捕获方向上的纹理特征，即针对模糊的部分也能很好的感知和处理</p>
+<p>将方形卷积替换为两个非堆成卷积可以focus方形卷积的local region<br><br>也就是说两个一维非对称卷积可以增强表示重要的局部显著特征。</p>
+<p>在残差学习的过程中3-3的卷积会受到1-3和3-1的影响，对提取的局部关键特征进行细化，以增强网络对局部细节的表达能力。</p>
+<p>分解空间特征为两个1D特征解码过程&#x3D;&gt;保留了水平和垂直方向上的未知信息 以增强静态区域的表示 和 物体未知的定位。</p>
+<p>Asymmetric CNN for image super-resolution 认为特有的网络结构聚合不同的特征 平等地处理所有像素。这忽视了局部 power像素点的影响 and 导致低效率的训练</p>
+<p>非堆成卷积可以强化水平和垂直方向上 以 提升局部显著特征 for SISR<br><br>非堆成卷积可以增强局部关键点对SISR的影响。而非 平等地treat所有像素点。</p>
+<p>将一个像素点地纹理走向用水平和垂直方向的向量表示。</p>
+<p>秩为1的二维卷积可以转化为两个1为卷积。</p>
+<p>明亮的颜色或者复杂的背景 may 隐藏一些细节信息 for 一个逆问题</p>
+<p>两个方向上的一维非堆成卷积被用于 丰富特征空间 for 提高SR模型的表征能力</p>
+<p>非对称卷积可以有效地提取更多的细节</p>
+<p>与传统的卷积相比 非对称卷积拥有更强的方向灵敏度 和 可分性。 可以更好地捕捉图像中的细节信息。</p>
+<h1 id="Image-Quality-Assessment"><a href="#Image-Quality-Assessment" class="headerlink" title="Image Quality Assessment"></a>Image Quality Assessment</h1><p>一般分为主观评价和客观评价：<br><br>主观评价被认为是最可靠和最准确地，但是主观评价是耗时和昂贵的。<br><br>客观的质量评价方法，通常是使用主观评价的数据进行设计和&#x2F;或训练的。</p>
+<p>no-ference IQA [8,9]</p>
+<h3 id="主观IQA数据库"><a href="#主观IQA数据库" class="headerlink" title="主观IQA数据库"></a>主观IQA数据库</h3><p><strong>Dehazing IQA databases</strong> <br><br>Dehazing quality (DHQ) database<br><br>1750张去雾图像 from 250张不同雾霾密度的真实图像 所有dehazing 图像标有主观评价MOS</p>
+<p>Synthetic haze removing quality (SHRQ) database<br><br>包括常规子集和航空图子集，包括45张和30张dehanzing图像 合成的 360 和 240 张hazy图像。提供MOS</p>
+<p>Waterloo IVC dehazed image database<br><br>提供255张图像，25张haze图像和200张dehazed图像生成。提供255张图像的MOS</p>
+<h3 id="客观IQA：传统topics"><a href="#客观IQA：传统topics" class="headerlink" title="客观IQA：传统topics"></a>客观IQA：传统topics</h3><p>Full-reference IQA algorithms:<br><br>从两幅图像中提取特征，然后进行距离计算。</p>
+<p>1.空间域方法：MSE PSNR (问题 HVS) 但仍然在用。<br><br>2.结构相似性和变体：SSIM FSIM PSIM GMS VGS <br><br>3.其他的结构和基于边缘的特性: <strong>NSER: non-shift edge based ratio</strong> <br><br>4.基于学习的特征提取与集成：</p>
+<p>wavelet domain<br>DCT domain</p>
+<p>Reduced-reference IQA algorithms:<br><br>RR IQA测量的目的是在有限的获取参考图像的情况下预测图像的质量。</p>
+<p>1.空间域方法：提取描述颜色空间相关性的特征图。颜色分布特征被映射到一个描述感知质量的数值表达式中。<br><br>2.变换域方法：</p>
+<p>No-reference IQA algorithms:<br><br>通常可以假设失真类型。</p>
+<p>Distortion-specific NR IQA methods：利用块的不连续性<br>Pan等人[121]没有在块边界处使用像素不连续，而是使用块边界处像素的边缘方向来测量块度。<br>Li等人[122]通过测量伪结构的规律来评价块性。作者还考虑了颜色缺失块的比例，因为较重的JPEG压缩会导致更多的颜色缺失块。<br>Li等[123]从图像中提取块网格，通过量化网格强度和规律性来测量块伪影。<br>Wang等人[117]将块图像建模为受纯块信号干扰的非块图像，然后通过检测和估计块信号的功率来测量块效应。</p>
+<p><strong>Blur&#x2F;noise ：</strong><br>它们实际上是两种相反的畸变类型，即，与有用的高频内容的丢失和高频内容的过量。</p>
+<p>噪声作为一种失真类型，与图像内容的相关性很小，因此其对感知质量的负面影响与噪声强度[141]基本成正比。同时，因为噪声与模糊是相反的退化，许多模糊测量被发现是有效的for噪声图像。</p>
+<p>图像的模糊度和锐度是一枚硬币的两面，所以模糊度量和锐度度量术语在文献中经常互换使用。</p>
+<h3 id="方法："><a href="#方法：" class="headerlink" title="方法："></a>方法：</h3><p>早期：<br><br>1.[143]等人提出了一种通过检测图像边缘的 和 分析边缘扩散 的方法。<br><br>2.[144]等人测量图像边缘的平均范围。即 平均梯度范围 of 边缘在相反梯度上的扩散。<br><br>3.[145]等人将明显模糊概念JNB集成到一个概率求和模型。<br><br>JBN表示需要感知的最小模糊程度在边缘附近。give a contrast larger than 明显的差异JND。利用概率累加模型来积累所有超过JNB的模糊distortions <br><br>4.[146]等人基于不同对比值下 人类的模糊感知构建模型。 采用一个概率模型估计在图像边缘检测模糊的概率。然后通过汇集模糊检测的累积概率（CPBD）来得到一个度量。<br><br>5.[147]等人引入了一种基于局部边缘梯度统计分析的锐度测量方法。</p>
+<p>[147]等人将每个像素的最大局部变化（MLV）定义为该像素相对于其8个邻居的最大强度变化。MLV分布被分析和推导为一个锐度测量。<br><br>[149]等人提出了一种在自回归参数空间中的锐度度量。计算估计的局部自回归系数的能量和对比度差，并积分为锐度得分。<br><br>[150]等人提出了一中基于稀疏的锐度测量方法。首先推导一个块级别的稀疏表示法。清晰度得分通过归一化能量计算得到 using 一组高方差块的 稀疏系数。<br></p>
+<p>频域的方法：<br><br>1.[151]分析了非零DCT系数的直方图，观察到尖锐图像具有较高的 alternating current (AC) coefficients <br><br>2.[152]在基于特征的上下文中使用局部频率内容分析<br><br>3.[153]首先用三级离散小波变换（DWT）对图像进行分解，然后计算DWT子带的对数能量 加权平均值作为锐度 <br><br>4.[154]等人提出了一个 局部相位相干性（LPC  local phase coherence）基于复小波域 base on 观察<br>模糊导致尖锐图像特征附近LPC强度的下降<br><br>5.[155]引入了一种测量方法for相机抖动模糊，基于光谱统计。 包括 不同方向上的图像光谱变化 以及 相机抖动图像的光谱轮廓的一些特性。</p>
+<p>空间域和频域混合方法：<br><br>[156]提出了一种基于平均边缘轮廓峰度的度量方法。它们检测边缘，并创建一个边缘轮廓 通过 划分一个8×8块。Then average 8×8DCT块的2D峰值。<br><br>[157]将不同的锐度测量值和一些简单的图像特征融合到一个基于神经网络的分类器中。<br><br>[158]中提出了一种光谱和空间锐度（S3）方法。S3结合了一个测量局部振幅谱斜率的光谱估计器with一个空间估计器which测量总的空间变化。<br><br>[159]提取了多尺度的空间和光谱特征，并通过SVR进行融合。空间特征基于梯度分解和奇异值分解，而光谱特征基于dct域熵。</p>
+<p>[227] [230] [234] <br><br>[46] 构建了dehazing 数据集 + 提出了一个客观的dehazing quality index 通过融合3类特征：haze-removing 特征，结构保留 特征，over-enhancement 特征。 </p>
+<p>通用的IQA方法 like BRISQUE[176] NIQE[177]</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://aifengdudexiaojie.github.io/2023/08/10/Deblurring-with-texture/" data-id="clmuejz3j0000v0wd7n127a17" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "John Doe"
+        },
+        "headline": "Deblurring with texture",
+        "image": "http://aifengdudexiaojie.github.io",
+        "keywords": "summary",
+        "genre": "",
+        "datePublished": "2023-08-10",
+        "dateCreated": "2023-08-10",
+        "dateModified": "2023-08-18",
+        "url": "http://aifengdudexiaojie.github.io/2023/08/10/Deblurring-with-texture/",
+        "description": "Different papers about textureIterative Dual CNNs for Image Deblurring:将deblurring分为两个任务：deblurring和detail restoration
+细节纹理部分利用浅而宽的特征without下采样&#x3D;&gt;仅提取图像纹理特征问题：直接从RGB 空间域提取纹理特征 有低频信息干扰
+MFC-Net: M",
+        "wordCount": 318
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2023/08/29/Java-design-model-1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Java design model 1
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2023/06/29/FFA-Net-Feature-Fusion-for-Dehazing/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">FFA-Net Feature Fusion for Dehazing</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/22/Recruitment/" class="thumbnail">
+    
+    
+        <span style="background-image:url(./Recruitment/s2.png)" alt="Recruitment" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/22/Recruitment/" class="title">Recruitment</a></p>
+                            <p class="item-date"><time datetime="2023-09-22T08:46:01.000Z" itemprop="datePublished">2023-09-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/05/NIQE/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/05/NIQE/" class="title">NIQE</a></p>
+                            <p class="item-date"><time datetime="2023-09-05T01:21:18.000Z" itemprop="datePublished">2023-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-pre-design-model/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-pre-design-model/" class="title">Java pre design model</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:11:24.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-design-model-1/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-design-model-1/" class="title">Java design model 1</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:05:39.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/10/Deblurring-with-texture/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/10/Deblurring-with-texture/" class="title">Deblurring with texture</a></p>
+                            <p class="item-date"><time datetime="2023-08-10T02:05:26.000Z" itemprop="datePublished">2023-08-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency-deblurring/" rel="tag">-frequency -deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hazing-feature-fusion/" rel="tag">-hazing -feature fusion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NRIQA/" rel="tag">NRIQA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily-code/" rel="tag">daily code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-SR/" rel="tag">paper SR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-dual-branch-denoising/" rel="tag">paper dual-branch denoising</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-frequency-deblurring/" rel="tag">paper frequency deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-multi-branch-defocus/" rel="tag">paper multi-branch defocus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-wavelet/" rel="tag">paper wavelet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recruitment/" rel="tag">recruitment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/" rel="tag">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wavelet-sod/" rel="tag">wavelet sod</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/frequency-deblurring/" style="font-size: 10px;">-frequency -deblurring</a> <a href="/tags/hazing-feature-fusion/" style="font-size: 10px;">-hazing -feature fusion</a> <a href="/tags/NRIQA/" style="font-size: 10px;">NRIQA</a> <a href="/tags/daily-code/" style="font-size: 15px;">daily code</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a> <a href="/tags/paper-SR/" style="font-size: 10px;">paper SR</a> <a href="/tags/paper-dual-branch-denoising/" style="font-size: 10px;">paper dual-branch denoising</a> <a href="/tags/paper-frequency-deblurring/" style="font-size: 10px;">paper frequency deblurring</a> <a href="/tags/paper-multi-branch-defocus/" style="font-size: 10px;">paper multi-branch defocus</a> <a href="/tags/paper-wavelet/" style="font-size: 15px;">paper wavelet</a> <a href="/tags/recruitment/" style="font-size: 10px;">recruitment</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/wavelet-sod/" style="font-size: 10px;">wavelet sod</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2023 John Doe</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/08/10/Deblurring-with-texture/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

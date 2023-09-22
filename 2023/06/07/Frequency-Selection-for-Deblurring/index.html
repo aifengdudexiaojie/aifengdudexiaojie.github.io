@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Frequency Selection for Deblurring | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="paper frequency deblurring" />
+    
+    <meta name="description" content="Intriguing Findings of Frequency Selection for Image Deblurring从模糊核&#x3D;&gt;端到端网络：是忽略了模糊核得重要性。简单地在模糊图像的频域上应用ReLU操作后进行傅里叶反变换。(频率选择) ？ &#x3D;&gt; 以此来提供模糊模式的信息 如 模糊方向和模糊水平 隐式地显示模糊核。 实现做法：在标准的ResBlock中插入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Frequency Selection for Deblurring">
+<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/06/07/Frequency-Selection-for-Deblurring/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Intriguing Findings of Frequency Selection for Image Deblurring从模糊核&#x3D;&gt;端到端网络：是忽略了模糊核得重要性。简单地在模糊图像的频域上应用ReLU操作后进行傅里叶反变换。(频率选择) ？ &#x3D;&gt; 以此来提供模糊模式的信息 如 模糊方向和模糊水平 隐式地显示模糊核。 实现做法：在标准的ResBlock中插入">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-07T00:36:34.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:40:58.551Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="paper frequency deblurring">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/code/index.html">index.code</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/paper/index.html">index.paper</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/other/index.html">index.other</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Frequency-Selection-for-Deblurring" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Frequency Selection for Deblurring
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2023/06/07/Frequency-Selection-for-Deblurring/" class="article-date">
+       <time datetime="2023-06-07T00:36:34.000Z" itemprop="datePublished">2023-06-07</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2023/06/07/Frequency-Selection-for-Deblurring/" class="article-date">
+     <time datetime="2023-06-07T09:40:58.551Z" itemprop="dateModified">2023-06-07</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/paper-frequency-deblurring/" rel="tag">paper frequency deblurring</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Intriguing-Findings-of-Frequency-Selection-for-Image-Deblurring"><a href="#Intriguing-Findings-of-Frequency-Selection-for-Image-Deblurring" class="headerlink" title="Intriguing Findings of Frequency Selection for Image Deblurring"></a>Intriguing Findings of Frequency Selection for Image Deblurring</h1><p>从模糊核&#x3D;&gt;端到端网络：是忽略了模糊核得重要性。<br><br>简单地在模糊图像的频域上应用ReLU操作后进行傅里叶反变换。(频率选择) ？<br><br> &#x3D;&gt; 以此来提供模糊模式的信息 如 模糊方向和模糊水平 隐式地显示模糊核。</p>
+<p>实现做法：在标准的ResBlock中插入傅里叶变换 ReLU 傅里叶逆变换  来达到用模糊核相关信息for去模糊网络。<br><br>1×1卷积用于帮助网络进行 更为灵活的频率选择。 Res FFT-ReLu Block<br><br>Res FFT-ReLu Block 学习频域空间 双域表示，同时利用 模糊核相关特征以及像素级相关特征。</p>
+<p>模块插入NAFNet后，可达33.85dB</p>
+<p>之前的方式认为图像模糊由传感器的PSF点扩散方法引起，从而被描述为清晰图像与PSF的卷积操作。认为PSF在频域中容易实例化。</p>
+<p>研究了ReLU在频域上的新角度。不同的ReLU参数设置可以得到不同的结果。<br><br>&#x3D;&gt;发现傅里叶变换后增加卷积有助于频率的阈值选择。</p>
+<p>可插拔模块FFT-ReLU Block</p>
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><p>傅里叶的应用：<br><br>FDA (Yang and Soatto 2020)在图像之间交换低频，减轻图像风格化对图像分割的影响。<br><br>GFNet (Rao et al. 2021)通过在频域学习长期的空间依赖用于图像分类。<br><br>LaMa (Suvorov et al. 2022)将傅里叶卷积应用到图像 inpainting <br><br>Deblurring中，SDWNet引入小波</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://aifengdudexiaojie.github.io/2023/06/07/Frequency-Selection-for-Deblurring/" data-id="clmuejz3q0005v0wdc7i2cy1q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "John Doe"
+        },
+        "headline": "Frequency Selection for Deblurring",
+        "image": "http://aifengdudexiaojie.github.io",
+        "keywords": "paper frequency deblurring",
+        "genre": "",
+        "datePublished": "2023-06-07",
+        "dateCreated": "2023-06-07",
+        "dateModified": "2023-06-07",
+        "url": "http://aifengdudexiaojie.github.io/2023/06/07/Frequency-Selection-for-Deblurring/",
+        "description": "Intriguing Findings of Frequency Selection for Image Deblurring从模糊核&#x3D;&gt;端到端网络：是忽略了模糊核得重要性。简单地在模糊图像的频域上应用ReLU操作后进行傅里叶反变换。(频率选择) ？ &#x3D;&gt; 以此来提供模糊模式的信息 如 模糊方向和模糊水平 隐式地显示模糊核。
+实现做法：在标准的ResBlock中插入",
+        "wordCount": 57
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2023/06/26/Frequency-Transformers-for-Deblurring/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Frequency Transformers for Deblurring
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2023/05/24/Wave-Channel-Attention/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Wavelet Channel Attention</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/22/Recruitment/" class="thumbnail">
+    
+    
+        <span style="background-image:url(./Recruitment/s2.png)" alt="Recruitment" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/22/Recruitment/" class="title">Recruitment</a></p>
+                            <p class="item-date"><time datetime="2023-09-22T08:46:01.000Z" itemprop="datePublished">2023-09-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/05/NIQE/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/05/NIQE/" class="title">NIQE</a></p>
+                            <p class="item-date"><time datetime="2023-09-05T01:21:18.000Z" itemprop="datePublished">2023-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-pre-design-model/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-pre-design-model/" class="title">Java pre design model</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:11:24.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-design-model-1/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-design-model-1/" class="title">Java design model 1</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:05:39.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/10/Deblurring-with-texture/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/10/Deblurring-with-texture/" class="title">Deblurring with texture</a></p>
+                            <p class="item-date"><time datetime="2023-08-10T02:05:26.000Z" itemprop="datePublished">2023-08-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency-deblurring/" rel="tag">-frequency -deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hazing-feature-fusion/" rel="tag">-hazing -feature fusion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NRIQA/" rel="tag">NRIQA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily-code/" rel="tag">daily code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-SR/" rel="tag">paper SR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-dual-branch-denoising/" rel="tag">paper dual-branch denoising</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-frequency-deblurring/" rel="tag">paper frequency deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-multi-branch-defocus/" rel="tag">paper multi-branch defocus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-wavelet/" rel="tag">paper wavelet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recruitment/" rel="tag">recruitment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/" rel="tag">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wavelet-sod/" rel="tag">wavelet sod</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/frequency-deblurring/" style="font-size: 10px;">-frequency -deblurring</a> <a href="/tags/hazing-feature-fusion/" style="font-size: 10px;">-hazing -feature fusion</a> <a href="/tags/NRIQA/" style="font-size: 10px;">NRIQA</a> <a href="/tags/daily-code/" style="font-size: 15px;">daily code</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a> <a href="/tags/paper-SR/" style="font-size: 10px;">paper SR</a> <a href="/tags/paper-dual-branch-denoising/" style="font-size: 10px;">paper dual-branch denoising</a> <a href="/tags/paper-frequency-deblurring/" style="font-size: 10px;">paper frequency deblurring</a> <a href="/tags/paper-multi-branch-defocus/" style="font-size: 10px;">paper multi-branch defocus</a> <a href="/tags/paper-wavelet/" style="font-size: 15px;">paper wavelet</a> <a href="/tags/recruitment/" style="font-size: 10px;">recruitment</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/wavelet-sod/" style="font-size: 10px;">wavelet sod</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2023 John Doe</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/06/07/Frequency-Selection-for-Deblurring/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

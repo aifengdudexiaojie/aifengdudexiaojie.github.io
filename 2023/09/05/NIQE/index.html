@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>NIQE | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="NRIQA" />
+    
+    <meta name="description" content="Making a ‘Completely Blind’ Image Quality Analyzerno-reference model该无参模型 NIQE base on 构建 ‘质量感知’特征的集合 and 让这些特征 fit 一个多元高斯分布MVG模型 其中 质量感知部分 用一个简单的and高度规则的自然场景统计模型NSS 获得 对于测试图像的NIQE的值 通过 计算距得到distance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NIQE">
+<meta property="og:url" content="http://aifengdudexiaojie.github.io/2023/09/05/NIQE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Making a ‘Completely Blind’ Image Quality Analyzerno-reference model该无参模型 NIQE base on 构建 ‘质量感知’特征的集合 and 让这些特征 fit 一个多元高斯分布MVG模型 其中 质量感知部分 用一个简单的and高度规则的自然场景统计模型NSS 获得 对于测试图像的NIQE的值 通过 计算距得到distance">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-05T01:21:18.000Z">
+<meta property="article:modified_time" content="2023-09-08T03:30:13.198Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="NRIQA">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/code/index.html">index.code</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/paper/index.html">index.paper</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/other/index.html">index.other</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-NIQE" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        NIQE
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2023/09/05/NIQE/" class="article-date">
+       <time datetime="2023-09-05T01:21:18.000Z" itemprop="datePublished">2023-09-05</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2023/09/05/NIQE/" class="article-date">
+     <time datetime="2023-09-08T03:30:13.198Z" itemprop="dateModified">2023-09-08</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/NRIQA/" rel="tag">NRIQA</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h2 id="Making-a-‘Completely-Blind’-Image-Quality-Analyzer"><a href="#Making-a-‘Completely-Blind’-Image-Quality-Analyzer" class="headerlink" title="Making a ‘Completely Blind’ Image Quality Analyzer"></a>Making a ‘Completely Blind’ Image Quality Analyzer</h2><p>no-reference model<br><br>该无参模型 NIQE base on 构建 ‘质量感知’特征的集合 <br><br>and <br><br>让这些特征 fit 一个多元高斯分布MVG模型</p>
+<p>其中 质量感知部分 用一个简单的and高度规则的自然场景统计模型NSS 获得</p>
+<p>对于测试图像的NIQE的值 通过 计算距得到<br><br>distance between <br><br>一个拟合的多元高斯分布模型 从测试图中提取了NSS特征并用MVG拟合<br><br>and<br><br>从自然图像语料库中提取的质量感知特征的MVG模型。</p>
+<h3 id="Spatial-Domain-NSS"><a href="#Spatial-Domain-NSS" class="headerlink" title="Spatial Domain NSS"></a>Spatial Domain NSS</h3><p>捕获 基本的低阶(low-order)自然图像统计。</p>
+<p>NSS模型：$I^{‘}(i,j)&#x3D;\frac{I(i,j)-A}{B+1}$<br><br>其中A为均值 B为方差  AB均为局部分信息。</p>
+<p>若图像是非自然图像或是自然想受到了非自然的扭曲时，与NSS设想下的理想模型想违背。 &lt;?&gt;</p>
+<p>NIQE仅使用了一个自然图像语料库中的NSS特征。相比之下，另一种质量评估BRISQUE在自然图像和扭曲图像上都做了特征的获取，也包括认为的主观打分。</p>
+<p>相比之下，NIQE指数不与任何特定的失真类型绑定</p>
+<h3 id="Patch-Selection"><a href="#Patch-Selection" class="headerlink" title="Patch Selection"></a>Patch Selection</h3><p>当得到图像系数(NSS计算)后将图像划分为P×P的块。但是并不取所有的块，而是一个子集。</p>
+<p>因为失焦是常见的现象，利用人类更加倾向于从尖锐图像区域评判图像质量，因此可以从尖锐的patch中进行显著的质量测量。</p>
+<p>但是实际来说是选取信息丰富的部分并且这一部分不太可能受到失真的限制的patch。然后用这些这些patch取构建一个自然图像patch的统计模型。</p>
+<p>方差域常常被忽视，但是方差中包含丰富的 <strong>结构性的图像信息</strong> 可以被用于计算局部的图像锐度。<br><br>利用方差计算锐度后进行阈值筛选，当锐度S&gt;T(阈值)的块被挑选</p>
+<h3 id="Characterizing-Image-Patches"><a href="#Characterizing-Image-Patches" class="headerlink" title="Characterizing Image Patches"></a>Characterizing Image Patches</h3><p>选定的自然图像patch 由NSS得到 质量感知 特征。<br><br>由NSS的研究表明：广义高斯分布可以有效地捕获图像中地扭曲。</p>
+<p>&#x3D;&gt;通过捕获水平和垂直以及对角方向上的信息来得到参数 以获取相应的特征。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://aifengdudexiaojie.github.io/2023/09/05/NIQE/" data-id="clmuejz3u000cv0wd5ws87jne" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "John Doe"
+        },
+        "headline": "NIQE",
+        "image": "http://aifengdudexiaojie.github.io",
+        "keywords": "NRIQA",
+        "genre": "",
+        "datePublished": "2023-09-05",
+        "dateCreated": "2023-09-05",
+        "dateModified": "2023-09-08",
+        "url": "http://aifengdudexiaojie.github.io/2023/09/05/NIQE/",
+        "description": "Making a ‘Completely Blind’ Image Quality Analyzerno-reference model该无参模型 NIQE base on 构建 ‘质量感知’特征的集合 and 让这些特征 fit 一个多元高斯分布MVG模型
+其中 质量感知部分 用一个简单的and高度规则的自然场景统计模型NSS 获得
+对于测试图像的NIQE的值 通过 计算距得到distance ",
+        "wordCount": 68
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2023/09/22/Recruitment/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Recruitment
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2023/08/29/Java-pre-design-model/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Java pre design model</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/22/Recruitment/" class="thumbnail">
+    
+    
+        <span style="background-image:url(./Recruitment/s2.png)" alt="Recruitment" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/22/Recruitment/" class="title">Recruitment</a></p>
+                            <p class="item-date"><time datetime="2023-09-22T08:46:01.000Z" itemprop="datePublished">2023-09-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/09/05/NIQE/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/05/NIQE/" class="title">NIQE</a></p>
+                            <p class="item-date"><time datetime="2023-09-05T01:21:18.000Z" itemprop="datePublished">2023-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-pre-design-model/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-pre-design-model/" class="title">Java pre design model</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:11:24.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/29/Java-design-model-1/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/29/Java-design-model-1/" class="title">Java design model 1</a></p>
+                            <p class="item-date"><time datetime="2023-08-29T13:05:39.000Z" itemprop="datePublished">2023-08-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/08/10/Deblurring-with-texture/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/08/10/Deblurring-with-texture/" class="title">Deblurring with texture</a></p>
+                            <p class="item-date"><time datetime="2023-08-10T02:05:26.000Z" itemprop="datePublished">2023-08-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency-deblurring/" rel="tag">-frequency -deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hazing-feature-fusion/" rel="tag">-hazing -feature fusion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NRIQA/" rel="tag">NRIQA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily-code/" rel="tag">daily code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-SR/" rel="tag">paper SR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-dual-branch-denoising/" rel="tag">paper dual-branch denoising</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-frequency-deblurring/" rel="tag">paper frequency deblurring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-multi-branch-defocus/" rel="tag">paper multi-branch defocus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper-wavelet/" rel="tag">paper wavelet</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recruitment/" rel="tag">recruitment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/" rel="tag">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wavelet-sod/" rel="tag">wavelet sod</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/frequency-deblurring/" style="font-size: 10px;">-frequency -deblurring</a> <a href="/tags/hazing-feature-fusion/" style="font-size: 10px;">-hazing -feature fusion</a> <a href="/tags/NRIQA/" style="font-size: 10px;">NRIQA</a> <a href="/tags/daily-code/" style="font-size: 15px;">daily code</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/paper/" style="font-size: 20px;">paper</a> <a href="/tags/paper-SR/" style="font-size: 10px;">paper SR</a> <a href="/tags/paper-dual-branch-denoising/" style="font-size: 10px;">paper dual-branch denoising</a> <a href="/tags/paper-frequency-deblurring/" style="font-size: 10px;">paper frequency deblurring</a> <a href="/tags/paper-multi-branch-defocus/" style="font-size: 10px;">paper multi-branch defocus</a> <a href="/tags/paper-wavelet/" style="font-size: 15px;">paper wavelet</a> <a href="/tags/recruitment/" style="font-size: 10px;">recruitment</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/wavelet-sod/" style="font-size: 10px;">wavelet sod</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2023 John Doe</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://aifengdudexiaojie.github.io/2023/09/05/NIQE/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
