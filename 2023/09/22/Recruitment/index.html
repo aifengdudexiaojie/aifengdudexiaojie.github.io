@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://aifengdudexiaojie.github.io/2023/09/22/Recruitment/Recruitment/s2.png">
 <meta property="article:published_time" content="2023-09-22T08:46:01.000Z">
-<meta property="article:modified_time" content="2023-09-22T09:21:59.435Z">
+<meta property="article:modified_time" content="2023-10-05T13:33:16.377Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="recruitment">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2023/09/22/Recruitment/" class="article-date">
-     <time datetime="2023-09-22T09:21:59.435Z" itemprop="dateModified">2023-09-22</time>
+     <time datetime="2023-10-05T13:33:16.377Z" itemprop="dateModified">2023-10-05</time>
   </a>
 </div>
 
@@ -242,6 +242,94 @@
 
 
 <p>3.输入某年某月某日，判断这一天是这一年的第几天?<br><br>样例输入:1998 8 21<br><br>样例输出:1998-8-21是这年的第233天</p>
+<h2 id="京东"><a href="#京东" class="headerlink" title="京东"></a>京东</h2><h3 id="单选-1"><a href="#单选-1" class="headerlink" title="单选"></a>单选</h3><p>-客户端A向服务器B发起TCP链接请求。<br><br>三次握手的确认报文</p>
+<p>-文件的软连接和硬连接的计数。</p>
+<p>-MySql中支持行级锁的存储引擎是<br><br>MySQL中支持行级锁的存储引擎是InnoDB。InnoDB是MySQL中最常用的存储引擎之一，它支持事务、ACID（原子性、一致性、隔离性和持久性）属性，并且能够在行级别上进行锁定。这意味着多个事务可以同时访问同一张表的不同行而不会发生冲突，从而提高了并发性能和数据完整性。</p>
+<p>-HashMap初始容量<br><br>在Java中，HashMap的初始容量是16，这是HashMap的默认初始容量。</p>
+<p>-clone，反射机制，反序列化 区别<br>这三种机制各自有不同的目的和用途。Clone用于复制对象，反射机制用于在运行时获取和操作类的信息，反序列化用于将对象从序列化格式还原为内存中的对象。根据具体的需求，你可以选择适当的机制来处理对象。</p>
+<p>-Java对象弱引用，虚引用，强引用，软引用特点<br><br>强引用：使用new操作符创建对象时，会生成一个强引用。只要强引用存在，垃圾回收器就不会回收该对象。例如：Object obj &#x3D; new Object()。</p>
+<p>软引用：使用SoftReference类创建的引用，当内存空间不足时，垃圾回收器会回收软引用对象。例如：SoftReference softRef &#x3D; new SoftReference&lt;&gt;(new Object())。</p>
+<p>弱引用：使用WeakReference类创建的引用，只要没有强引用或其他强可及对象引用该对象，垃圾回收器就会回收弱引用对象。例如：WeakReference weakRef &#x3D; new WeakReference&lt;&gt;(new Object())。</p>
+<p>虚引用：使用PhantomReference类创建的引用，虚引用对象的get()方法始终返回null，只有当虚引用对象被垃圾回收器回收时，才会被添加到引用队列中。例如：PhantomReference phantomRef &#x3D; new PhantomReference&lt;&gt;(new Object(), referenceQueue)</p>
+<p>-TreeMap的底层结构是红黑树<br><br>红黑树可以保证在最坏情况下，每个操作的时间复杂度都是O(log n)。因此，TreeMap可以在O(log n)的时间复杂度内完成插入、删除、查找等操作，并且可以保证元素的有序性。</p>
+<p>-HashSet的底层实现就是基于HashMap实现的。</p>
+<p>-LinkedHashMap 底层使用了 HashMap <br><br>LinkedHashMap是HashMap的一个子类</p>
+<p>-TreeSet的底层使用了 TreeMap<br><br>TreeSet是一种基于红黑树的有序集合实现，它使用TreeMap来存储元素，其中TreeSet中的元素作为TreeMap的key，而value则是一个固定的Object对象</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>1.第一行输入一个整数n,表示数组长度<br><br>第二行输入n个整数a1,a2,a3…an 表示数组元素<br><br>1&lt;&#x3D;n&lt;10e5<br>1&lt;&#x3D;ai&lt;&#x3D;n</p>
+<p>按照偶数下标和奇数下标进行分类，交换只能在对应的分类中进行交换。</p>
+<p>如果能变成有序的，输出最少需要的操作次数，否则输出-1</p>
+<pre><code class="java">import java.util.*;
+public class Main
+static final int maxn = 1e5+7;
+static int[ ] a = new int [ maxn], pos =
+new int[ maxn];
+public static void main(String[] args) &#123;
+    Scanner SC 
+    new Scanner (System. in);
+    int N = sc.nextInt();
+    for(int i=1;i&lt;=N;i++)&#123;
+    a[i] = sc.nextInt();
+    pos[a[i]] = i;
+    &#125;
+    int ans = 0;
+    for(int i=1;i&lt;=N;i++)&#123;
+        if(a[i ]==i)continue;
+        if(i%2!=pos[i]%2)&#123;
+        System. out. println(&quot;-1&quot;); 
+    return ;
+    &#125;
+    int temp
+    a[pos[i]];
+    a[pos[i]] = a[i];
+    a[i] = temp;
+    ans++;
+    pos[a[pos[i]]] = pos[i];
+    &#125;
+    System. . out . println(ans);
+&#125;
+</code></pre>
+<h2 id="深信服"><a href="#深信服" class="headerlink" title="深信服"></a>深信服</h2><h3 id="填空单选"><a href="#填空单选" class="headerlink" title="填空单选"></a>填空单选</h3><p>-哈希表存储数据的搜索过程：散列搜索<br><br>直接地址法：关键字直接映射到哈希表中的一个固定位置。 O(1)<br><br>拉链法：哈希表，每个数组位置上包含一个链表。 O(1+α)<br><br>线性探测法：发生冲突，找下一个可用槽。<br><br>双散列法：与探测相似，发生冲突时用第二个哈希函数来确定下一个槽位位置。<br><br>开放寻址法：所有元素在哈希表中，存在冲突时用某种规则寻找下一个可用槽位。</p>
+<p>-堆排序：大堆，小堆<br></p>
+<h2 id="小天才"><a href="#小天才" class="headerlink" title="小天才"></a>小天才</h2><h3 id="单选题"><a href="#单选题" class="headerlink" title="单选题"></a>单选题</h3><p>&lt;60道单选&gt;</p>
+<p>-数据库的事物隔离级别<br><br>在SQL标准中，定义了四种事务隔离级别，从最低到最高依次是：<br><br>READ UNCOMMITTED（读未提交）<br><br>READ COMMITTED（读已提交）<br><br>REPEATABLE READ（可重复读）<br><br>SERIALIZABLE（串行化）</p>
+<p>-数据库不同级别范式含义<br><br>第一范式（1NF）：<br>表中的每个字段都包含一个原子值，不能再分为更小的数据单元。<br>1NF确保表中的每个列都具有原子性。</p>
+<p>第二范式（2NF）：<br>表必须符合1NF，并且没有部分函数依赖，即每个非主属性都完全依赖于主键。<br>2NF消除了部分函数依赖，确保每个非主属性与主键的每个部分都相关。</p>
+<p>第三范式（3NF）：<br>表必须符合2NF，并且没有传递函数依赖，即非主属性之间不会相互依赖。<br>3NF消除了传递函数依赖，确保表中的每个非主属性都直接依赖于主键。</p>
+<p>巴斯-科德范式（BCNF）：<br>BCNF是在3NF的基础上进一步规范化的一种范式。<br>表必须符合3NF，并且每个非主属性都不依赖于候选键的任何超键（候选键是可以唯一标识一条记录的属性组合）。</p>
+<p>第四范式（4NF）：<br>表必须符合BCNF，并且没有多值依赖，即表中的非主属性之间不能有多值依赖关系。4NF消除了多值依赖，确保表中的每个非主属性都与主键直接相关。</p>
+<p>第五范式（5NF），也称为投影-连接范式（PJ&#x2F;NF）：<br>5NF是在4NF的基础上进一步规范化的一种范式。它解决了多个表之间的联接（Join）操作引起的问题，确保没有在一张表中可以通过联接操作推导出的信息。</p>
+<p>高级别的范式通常需要更多的表来存储数据，这可能会导致复杂的数据库模式和查询操作。因此，在实际数据库设计中，通常需要权衡规范化和性能之间的需求。范式的目标是确保数据的一致性和减少冗余，但在某些情况下，可能会选择违反某些范式以提高查询性能。设计数据库表结构时，需要根据应用程序的需求来选择适当的范式级别。</p>
+<p>-不会重写子类的声明<br><br>final关键字来修饰方法、类或变量<br><br>不允许重写方法 不允许继承类 不允许修改变量值</p>
+<p>-软件开发生命周期模型的优缺点<br></p>
+<p>增量模型（Incremental Model）：<br>增量模型将软件系统划分为若干个部分，每个部分都被独立地开发和测试。<br>每个增量通常是一个完整的子系统，可以独立运行。<br>增量模型的好处包括逐步提供功能、早期可交付、更容易进行集成和测试。</p>
+<p>迭代模型（Iterative Model）：<br>迭代模型强调在软件开发过程中多次重复相同的阶段，每次迭代都可以增加新的功能或改进。<br>每个迭代周期都包括需求分析、设计、编码、测试等阶段。<br>迭代模型的好处包括更好的应对需求变化、更早的可视化结果和更好的风险管理。</p>
+<p>螺旋模型（Spiral Model）：<br>螺旋模型将软件开发过程视为一个不断旋转的螺旋，每个旋转代表一个开发周期。<br>每个旋转周期都包括风险评估、计划、工程和评审四个阶段。<br>螺旋模型强调风险管理和迭代开发，特别适用于大型和复杂的项目。</p>
+<p>V模型（V-Model）：<br>V模型将软件开发生命周期与测试生命周期相互关联，形成一个V字形状的结构。<br>每个开发阶段都与相应的测试阶段相对应，确保在开发完成后进行适当的测试。<br>V模型强调了测试的重要性，有助于提前发现和修复问题。</p>
+<p>敏捷开发模型（Agile Models）：<br>敏捷开发是一组灵活的方法和原则，包括Scrum、Kanban、Extreme Programming（XP）等。<br>这些方法强调快速交付、迭代开发、持续反馈、团队协作和客户参与。<br>敏捷方法适用于需求变化频繁或项目要求快速交付的情况。</p>
+<p>瀑布模型：优：清晰的阶段划分 适用于小型项目 易于管理<br><br>缺：不适用于变化频繁的需求 风险高 不适用于大型和复杂项目 客户反馈有限</p>
+<p>增量模型：优：早期可交付 适应需求变化 降低风险<br><br>缺：集成复杂性 可能导致过多的代码重复 </p>
+<p>迭代模型：优：更好的应对需求变化 早期可视化结果 风险管理<br><br>缺：可能导致范围膨胀 需要更多的客户参与</p>
+<p>螺旋模型：优：风险管理 适应需求变化 早期原型开发<br><br>缺：复杂性高 不适用于小型项目</p>
+<p>-mysql Oracle常用端口<br><br>3306 1521</p>
+<p>-Java垃圾回收机制<br><br>虽然Java的垃圾回收机制大大减轻了开发人员的内存管理负担，但不合理的内存使用和对象引用管理仍可能导致性能问题。因此，开发人员仍然需要编写高效的代码，并了解垃圾回收的工作原理，以优化应用程序的内存使用。</p>
+<p>-forward和redirect区别<br><br>Forward（转发）：服务器内部跳转 单次请求-响应周期 速度快 相对路径<br><br>Redirect（重定向）：客户端浏览器跳转 多次请求-响应周期 速度相对较慢 绝对路径</p>
+<p>Forward用于在同一个应用程序内的不同组件之间进行跳转，速度较快，共享相同的请求-响应周期，使用相对路径。</p>
+<p>Redirect用于在不同的请求-响应周期内进行跳转，速度相对较慢，需要提供绝对URL。它通常用于跳转到其他应用程序或网站，或者用于处理POST请求后避免重复提交表单数据等场景。</p>
+<p>-static{}方法在类中执行顺序<br><br>优先执行static{}中方法</p>
+<h2 id="掌阅科技"><a href="#掌阅科技" class="headerlink" title="掌阅科技"></a>掌阅科技</h2><h3 id="单选题-1"><a href="#单选题-1" class="headerlink" title="单选题"></a>单选题</h3><p>-快速排序</p>
+<p>-平衡归并排序</p>
+<p>-贝叶斯公式</p>
+<p>-正则表达式</p>
+<p>-随机森林模型</p>
+<p>-段页式管理</p>
+<p>-地址映射</p>
+<p>-UML概念</p>
+<p>-数据库范式</p>
+<p>-逆波兰表达式</p>
+<p>-哈夫曼树</p>
+<h3 id="算法题-1"><a href="#算法题-1" class="headerlink" title="算法题"></a>算法题</h3><p>1.给定一个字符串，分割成一些子串，要求都是回文串，返回符合要求的最小分割次数。</p>
+<h3 id="问答"><a href="#问答" class="headerlink" title="问答"></a>问答</h3><p>1.简述网络模型OSI&#x2F;TCP</p>
+<p>2.简述四种事物隔离级别以及其对事物的处理过程</p>
 
         </div>
         <footer class="article-footer">
@@ -325,12 +413,12 @@
         "genre": "",
         "datePublished": "2023-09-22",
         "dateCreated": "2023-09-22",
-        "dateModified": "2023-09-22",
+        "dateModified": "2023-10-05",
         "url": "http://aifengdudexiaojie.github.io/2023/09/22/Recruitment/",
         "description": "浙江大华单选-面向字符的输入流有哪些InputStreamReader
 -Nginx的特点（1）更快（2）高扩展性，跨平台（3）高可靠性：用于反向代理，宕机的概率微乎其微（4）低内存消耗（5）单机支持10万以上的并发连接（6）热部署（7）最自由的BSD许可协议
 -创建者设计模式有哪些单例模式；原型模式；工厂方法模式；抽象工厂模式；创造者模式&#x3D;&gt;结构型设计模式：适配器模式；桥接模式；",
-        "wordCount": 54
+        "wordCount": 320
     }
 </script>
 
